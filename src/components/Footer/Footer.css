@@ -1,0 +1,13 @@
+.footer-container{
+    position: absolute;
+    width: 100%;
+    background-color: darkblue;
+    bottom: 0;
+}
+
+.copyright{
+    font-size: 15px;
+    color: white;
+    text-align: right;
+    margin-right: 10px;
+}

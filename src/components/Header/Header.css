@@ -1,4 +1,12 @@
-.logoUni {
-    width: 100px;
-    height: 60px;
+.navbar{
+    display: inline-block;
+    width: 100%;
+    height: 100px;
+    background-color: darkblue;
+}
+
+.title{
+    font-size: 30px;
+    text-align: center;
+    color: white;
 }

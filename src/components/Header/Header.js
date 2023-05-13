@@ -1,17 +1,12 @@
 import React from "react";
-
-import "./Header.css"
-
-//import logo
-import logo from "./../../assets/img/logos/UNI-Logo-Nicaragua.png";
+import "./Header.css";
 
 const Header = () => {
-    return ( 
+    return (
         <header className="navbar">
-            <img className="logoUni" src={ logo } alt="LogoUNI" />
-            <h3>UniLogo</h3>
+            <p className="title">Universidad Nacional de Ingenieria</p>
         </header>
-     );
+    );
 }
  
 export default Header;
