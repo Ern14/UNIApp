@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Login from '../src/views/LoginPage/Login';
 import Datagrid from "./views/DatagridPage/Datagrid";
 
-const App = () => {
+function App() {
   return(
     <>
       <Routes>
