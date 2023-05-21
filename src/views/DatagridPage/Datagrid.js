@@ -7,7 +7,7 @@ const Datagrid = () => {
   
     useEffect(() => {
       // Datos del Servidor
-      axios.get('http://localhost:4000/home')
+      axios.get('http://localhost:4000/users')
         .then(response => {
           setData(response.data);
         })
@@ -24,7 +24,7 @@ const Datagrid = () => {
     ];
   
     return (
-      <div style={{ height: 400, width: '100%' }}>
+      <div>
         <DataGrid rows={data} columns={columns} getRowId={(row) => row.idUsuario} />
       </div>
     );

@@ -1,5 +1,6 @@
-.navbar{
-    display: inline-block;
+.topbar{
+    display: flex;
+    flex-direction: row;
     width: 100%;
     height: 100px;
     background-color: darkblue;

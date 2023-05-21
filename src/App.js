@@ -5,12 +5,12 @@ import Datagrid from "./views/DatagridPage/Datagrid";
 
 const App = () => {
   return(
-    <>
+    <div className="App">
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/Datagrid" element={<Datagrid />} />
       </Routes>
-    </>
+    </div>
   );
 };
 

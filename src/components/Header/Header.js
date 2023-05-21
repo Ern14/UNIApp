@@ -3,7 +3,7 @@ import "./Header.css";
 
 const Header = () => {
     return (
-        <header className="navbar">
+        <header className="topbar">
             <p className="title">Universidad Nacional de Ingenieria</p>
         </header>
     );
