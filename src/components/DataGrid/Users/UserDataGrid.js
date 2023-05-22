@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 
-const Datagrid = () => {
+const UsersDatagrid = () => {
     const [data, setData] = useState([]);
   
     useEffect(() => {
@@ -20,7 +20,12 @@ const Datagrid = () => {
     const columns = [
       { field: 'idUsuario', headerName: 'ID', width: 100 },
       { field: 'correo', headerName: 'Correo', width: 200 },
-      { field: 'userStatus', headerName: 'Estado', width: 200 },
+      { 
+        field: 'userStatus',
+        headerName: 'Estado',
+        width: 200 ,
+        valueGetter: (params) => (params.value ? 'Activo' : 'Inactivo')
+      },
     ];
   
     return (
@@ -30,4 +35,4 @@ const Datagrid = () => {
     );
   };
   
-  export default Datagrid;
+  export default UsersDatagrid;

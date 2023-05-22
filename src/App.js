@@ -1,14 +1,14 @@
 import React from "react";
 import { Routes, Route } from 'react-router-dom';
-import Login from '../src/views/LoginPage/Login';
-import Datagrid from "./views/DatagridPage/Datagrid";
+import LoginPage from './views/LoginPage/LoginPage';
+import HomePage from "./views/HomePage/HomePage";
 
 const App = () => {
   return(
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/Datagrid" element={<Datagrid />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
       </Routes>
     </div>
   );
