@@ -1,13 +1,38 @@
 .topbar{
-    display: flex;
-    flex-direction: row;
     width: 100%;
-    height: 100px;
     background-color: darkblue;
 }
 
-.title{
+.topbar .group{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 20px;
+    padding: 15px 0px;
+}
+
+.topbar .group .box figure {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.topbar .group .box figure img {
+    width: 160px;
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.topbar .group .box h1 {
+    color: white;
     font-size: 30px;
-    text-align: center;
+}
+
+.topbar .group .box h2 {
+    font-size: 20px;
     color: white;
 }

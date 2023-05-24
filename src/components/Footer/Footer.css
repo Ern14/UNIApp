@@ -6,8 +6,12 @@
 }
 
 .copyright{
-    font-size: 10px;
+    margin: auto;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.copyright p{
+    font-size: 15px;
     color: white;
-    text-align: right;
-    margin-right: 10px;
 }
