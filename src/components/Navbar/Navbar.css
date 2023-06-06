@@ -1,0 +1,67 @@
+.navbar{
+    background-color: darkblue;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px;
+}
+
+.nav-links{
+    list-style: none;
+}
+
+
+.nav-links li{
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.nav-links li a{
+    cursor: pointer;
+    padding: 7px 20px;
+    color: white;
+    text-decoration: none;
+    background-color: darkblue;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-links li a:hover{
+    cursor: pointer;
+    background-color: white;
+    color: darkblue;
+}
+
+.nav-links li a:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    animation: rippleEffect 0.8s ease-out;
+  }
+  
+  @keyframes rippleEffect {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0.7;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(2);
+      opacity: 0;
+    }
+  }
+
+.nav-links li a:active:after {
+    animation: none;
+    opacity: 0.7;
+  }
+
