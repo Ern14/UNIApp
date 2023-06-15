@@ -1,0 +1,8 @@
+.container{
+    display: flex;
+}
+
+.datagrid{
+    position: relative;
+    left: 250px;
+}
