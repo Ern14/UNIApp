@@ -6,3 +6,39 @@
 .secContainer{
     margin:  30px 20px;
 }
+
+.interact{
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.addDiv{
+    margin-right: 150px;
+}
+
+.searchDiv{
+    align-items: center;
+}
+
+.buttonDesing{
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: darkblue;
+    color: white;
+}
+
+.buttonDesing:hover{
+    cursor: pointer;
+    border-color: lightblue;
+    transition: .2s;
+}
+
+.buttonDesing:active{
+    background-color: white;
+    color: darkblue;
+    transition: .2s;
+}
+
+.searchInput{
+    margin-right: 10px;
+}

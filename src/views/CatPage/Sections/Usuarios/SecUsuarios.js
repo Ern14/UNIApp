@@ -8,7 +8,13 @@ const SecUsuario = () => {
         <div className='userSec'>
             <div className='secContainer'>
                 <div className='interact'>
-                    <button className='addNewUser'>Agregar</button>
+                    <div className='addDiv'>
+                        <button className='buttonDesing'>Agregar</button>
+                    </div>
+                    <div className='searchDiv'>
+                        <input className='searchInput'></input>
+                        <button className='buttonDesing'>Buscar</button>
+                    </div>             
                 </div>
                 <div className='grid'>
                     <UsersDatagrid />
