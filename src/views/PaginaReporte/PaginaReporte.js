@@ -1,10 +1,10 @@
 import React from 'react';
 //import { Routes, Route } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar/Principal/SidebarPrin';
+import Sidebar from '../../components/Sidebar/Informe/SidebarInf';
 
-import './MainPage.css';
+import './PaginaReporte.css';
 
-const MainPage = () => {
+const PaginaReporte = () => {
     return(
         <div className='container'>
             <Sidebar />
@@ -12,4 +12,4 @@ const MainPage = () => {
     );
 };
 
-export default MainPage;
+export default PaginaReporte;

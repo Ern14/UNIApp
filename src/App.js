@@ -1,15 +1,15 @@
 import React from "react";
 import { Routes, Route } from 'react-router-dom';
-import LoginPage from './views/LoginPage/LoginPage';
-import HomePage from "./views/HomePage/HomePage";
+import PaginaInicioSesion from './views/PaginaInicioSesion/PaginaInicioSesion';
+import PaginaInicio from "./views/PaginaInicio/PaginaInicio";
 import NotFound from "./views/NotFoundPage/NotFound";
 
 const App = () => {
   return(
     <div className="App">
       <Routes>
-        <Route path="/*" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/*" element={<PaginaInicio />} />
+        <Route path="/Iniciar-Sesion" element={<PaginaInicioSesion />} />
         <Route path="*" element={<NotFound/>} />
       </Routes>
     </div>

@@ -1,9 +1,9 @@
 import React from 'react';
-import UsersDatagrid from '../../../../components/DataGrid/Users/UserDataGrid';
+import DataGridUsuarios from '../../../../components/DataGrid/Usuarios/DataGridUsuarios';
 
-import './SecUsuarios.css'
+import './SeccionUsuarios.css'
 
-const SecUsuario = () => {
+const SeccionUsuarios = () => {
     return(
         <div className='userSec'>
             <div className='secContainer'>
@@ -17,11 +17,11 @@ const SecUsuario = () => {
                     </div>             
                 </div>
                 <div className='grid'>
-                    <UsersDatagrid />
+                    <DataGridUsuarios />
                 </div>
             </div>
         </div>
     );
 }
 
-export default SecUsuario;
+export default SeccionUsuarios;

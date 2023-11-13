@@ -1,10 +1,10 @@
 import React from 'react';
 //import { Routes, Route } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar/Bitácora/SidebarBit';
+import Sidebar from '../../components/Sidebar/Principal/SidebarPrin';
 
-import './BitPage.css';
+import './PaginaPrincipal.css';
 
-const BitPage = () => {
+const PaginaPrincipal = () => {
     return(
         <div className='container'>
             <Sidebar />
@@ -12,4 +12,4 @@ const BitPage = () => {
     );
 };
 
-export default BitPage;
+export default PaginaPrincipal;

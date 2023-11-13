@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 
-const UsersDatagrid = () => {
+const DataGridUsuarios = () => {
     const [data, setData] = useState([]);
   
     useEffect(() => {
       // Datos del Servidor
-      axios.get('http://localhost:4000/users')
+      axios.get('http://localhost:4000/usuarios')
         .then(response => {
           setData(response.data);
         })
@@ -19,9 +19,9 @@ const UsersDatagrid = () => {
     // Columnas de DataGrid
     const columns = [
       { field: 'idUsuario', headerName: 'ID', width: 100 },
-      { field: 'correo', headerName: 'Correo', width: 200 },
+      { field: 'Correo', headerName: 'Correo', width: 200 },
       { 
-        field: 'userStatus',
+        field: 'Activo',
         headerName: 'Estado',
         width: 200 ,
         valueGetter: (params) => (params.value ? 'Activo' : 'Inactivo')
@@ -35,4 +35,4 @@ const UsersDatagrid = () => {
     );
   };
   
-  export default UsersDatagrid;
+  export default DataGridUsuarios;

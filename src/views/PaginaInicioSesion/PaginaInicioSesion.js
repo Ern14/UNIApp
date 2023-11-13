@@ -4,7 +4,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import LoginCard from '../../components/LoginCard/LoginCard';
 
-const LoginPage = () => {
+const PaginaInicioSesion = () => {
   return (
     <div>
       <Header />
@@ -14,4 +14,4 @@ const LoginPage = () => {
   );
 }
 
-export default LoginPage;
+export default PaginaInicioSesion;
