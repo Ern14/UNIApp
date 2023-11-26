@@ -6,8 +6,7 @@ const DataGridUsuarios = () => {
     const [data, setData] = useState([]);
   
     useEffect(() => {
-      // Datos del Servidor
-      axios.get('http://localhost:4000/usuarios')
+      axios.get('http://localhost:4000/obtenerUsuarios')
         .then(response => {
           setData(response.data);
         })
@@ -16,14 +15,15 @@ const DataGridUsuarios = () => {
         });
     }, []);
   
-    // Columnas de DataGrid
     const columns = [
       { field: 'idUsuario', headerName: 'ID', width: 100 },
       { field: 'Correo', headerName: 'Correo', width: 200 },
+      { field: 'NombreRol', headerName: 'Permiso', width: 200 },
       { 
         field: 'Activo',
         headerName: 'Estado',
         width: 200 ,
+        height: 100,
         valueGetter: (params) => (params.value ? 'Activo' : 'Inactivo')
       },
     ];

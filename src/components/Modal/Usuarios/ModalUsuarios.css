@@ -1,0 +1,88 @@
+.Overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,.5);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor{
+    width: 500px;
+    min-height: 100px;
+    background: #fff;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: rgba(100,100,110,.2) 0px 7px 29px 0px;
+    padding: 20px;
+}
+
+.encabezado{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid;
+}
+
+.tituloModal{
+    font-size: 20px;
+    color: darkblue;
+}
+
+.botonCerrarEncabezado{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: .3s ease all;
+    border-radius: 5px;
+    color: black;
+}
+
+.botonCerrarEncabezado:hover{
+    background: #f2f2f2;
+}
+
+.cuerpo{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.nombreLabel{
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.campo{
+    margin-bottom: 20px;
+}
+
+.divBotones{
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+.boton{
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: darkblue;
+    color: white;
+}
+
+.boton:hover{
+    cursor: pointer;
+    border-color: lightblue;
+    transition: .2s;
+}
