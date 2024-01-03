@@ -20,7 +20,7 @@ const SeccionUsuarios = () => {
                             Agregar</button>
                     </div>
                     <div className='searchDiv'>
-                        <input className='searchInput'></input>
+                        <input className='inputBuscar'></input>   
                         <button className='buttonDesing'>Buscar</button>
                     </div>             
                 </div>

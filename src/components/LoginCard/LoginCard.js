@@ -1,7 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./LoginCard.css";
 
 const LoginCard = () => {
+
+    const navigate = useNavigate();
+
+    const navigateHome = () => {
+        navigate('/');
+    }
+
     return(
         <div className='card'>
             <p>Iniciar Sesion</p>
@@ -17,7 +25,10 @@ const LoginCard = () => {
                     <label>Contraseña</label>
                 </div>
                 <div className="submitbutton">
-                    <input type="submit" value="Ingresar"></input>
+                    <input 
+                        type="submit" 
+                        value="Ingresar"
+                        onClick={navigateHome}></input>
                 </div>
             </form>
         </div>

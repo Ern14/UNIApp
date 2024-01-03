@@ -8,7 +8,7 @@ const DataGridUsuarios = () => {
     useEffect(() => {
       axios.get('http://localhost:4000/obtenerUsuarios')
         .then(response => {
-          setData(response.data);
+          setData(response.data.datos);
         })
         .catch(error => {
           console.log(error);
@@ -22,8 +22,7 @@ const DataGridUsuarios = () => {
       { 
         field: 'Activo',
         headerName: 'Estado',
-        width: 200 ,
-        height: 100,
+        width: 200,
         valueGetter: (params) => (params.value ? 'Activo' : 'Inactivo')
       },
     ];

@@ -7,6 +7,7 @@ const ModalUsuarios = ({ estado, cambiarEstado }) => {
 
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
+    const [selects, setSelects] = useState();
 
     const obtenerFechaActual = () => {
         const fechaActual = new Date();
@@ -48,20 +49,36 @@ const ModalUsuarios = ({ estado, cambiarEstado }) => {
                             >
                                 X</button>
                         </div>
-                        <div className='cuerpo'>
-                            <label className='nombreLabel'>Correo: </label>
-                            <input 
-                                className='campo'
-                                value={correo}
-                                onChange={(e) => setCorreo(e.target.value)}
-                            ></input>
-                            <label className='nombreLabel'>Contraseña: </label>
-                            <input 
-                                className='campo'
-                                value={contrasena}
-                                onChange={(e) => setContrasena(e.target.value)}
-                            ></input>
-                        </div>
+                        <form className='cuerpo'>
+                            <div className='textfield'>  
+                                <input
+                                    type="email"
+                                    required
+                                    value={correo}
+                                    onChange={(e) => setCorreo(e.target.value)}
+                                ></input>
+                                <span></span>
+                                <label>Correo: </label>
+                            </div>
+                            <div className='textfield'>
+                                <input
+                                    required
+                                    value={contrasena}
+                                    onChange={(e) => setContrasena(e.target.value)}
+                                ></input>
+                                <span></span>
+                                <label>Contraseña: </label>
+                            </div>
+                            <div className='textfield'>
+                                <select value={selects} onChange={e=>setSelects(e.target.value)}>
+                                    <option>Administrador</option>
+                                    <option>Vice rector</option>
+                                    <option>Jefe de departamento</option>
+                                </select>
+                                <span></span>
+                                <label>Rol: </label>
+                            </div>
+                        </form>
                         <div className='divBotones'>
                             <button
                                 className='boton'
