@@ -11,7 +11,8 @@ const ModalUsuarios = ({ estado, cambiarEstado }) => {
 
     const obtenerFechaActual = () => {
         const fechaActual = new Date();
-        return fechaActual.toISOString();
+        const zonaHoraria = { timeZone: 'America/Managua' };
+        return fechaActual.toLocaleString('es-NI', zonaHoraria);
     };
 
     const InsertarUsuario = async () => {
