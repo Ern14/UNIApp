@@ -1,9 +1,44 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import './ModalUsuarios.css'
 
 const ModalUsuarios = ({ estado, cambiarEstado }) => {
+
+    const notifySuccess = () => toast.success("Usuario Creado!", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
+    const notifyWarning = () => toast.warn("Usuario existente", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
+    const notifyError = () => toast.error("Error", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    }
+    );
 
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
@@ -16,25 +51,28 @@ const ModalUsuarios = ({ estado, cambiarEstado }) => {
     };
 
     const InsertarUsuario = async () => {
-        const fechaCreacion = obtenerFechaActual();
-        const fechaModificacion = obtenerFechaActual();
-
-        axios.post('http://localhost:4000/insertarUsuarios', {
-            FK_idRol: 1,
+        const existeUsuario = await axios.get(`http://localhost:4000/filtrarUsuarios/${correo}`);
+        if (existeUsuario.data.datos.length > 0) {
+            notifyWarning();
+        }else{
+            axios.post('http://localhost:4000/insertarUsuarios', {
+            FK_idRol: 2,
             Correo: correo,
             Contraseña: contrasena,
             Activo: 1,
-            FechaCreacion: fechaCreacion,
+            FechaCreacion: "2023-11-19 00:00:00.000",
             UsuarioCreacion: 1,
-            FechaModificacion: fechaModificacion,
+            FechaModificacion: "2023-11-19 00:00:00.000",
             UsuarioModificacion: 1
         })
             .then(function (response) {
-                console.log(response);
+                notifySuccess();
             })
             .catch(function (error) {
-                console.log(error);
+                notifyError(error);
             });
+        }
+
     }
 
     return (
@@ -51,7 +89,7 @@ const ModalUsuarios = ({ estado, cambiarEstado }) => {
                                 X</button>
                         </div>
                         <form className='cuerpo'>
-                            <div className='textfield'>  
+                            <div className='textfield'>
                                 <input
                                     type="email"
                                     required
@@ -71,7 +109,7 @@ const ModalUsuarios = ({ estado, cambiarEstado }) => {
                                 <label>Contraseña: </label>
                             </div>
                             <div className='textfield'>
-                                <select value={selects} onChange={e=>setSelects(e.target.value)}>
+                                <select value={selects} onChange={e => setSelects(e.target.value)}>
                                     <option>Administrador</option>
                                     <option>Vice rector</option>
                                     <option>Jefe de departamento</option>
@@ -92,6 +130,18 @@ const ModalUsuarios = ({ estado, cambiarEstado }) => {
                             >
                                 Cerrar</button>
                         </div>
+                        <ToastContainer
+                            position="bottom-center"
+                            autoClose={5000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light"
+                        />
                     </div>
                 </div>
             }
