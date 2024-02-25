@@ -11,7 +11,7 @@ import './PaginaInicio.css';
 
 const PaginaInicio = () => {
     return (
-      <div>
+      <div className='parent'> 
         <Navbar />
         <div className='container'>
           <Routes>

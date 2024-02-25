@@ -1,37 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const DataGridUsuarios = () => {
-    const [data, setData] = useState([]);
-  
-    useEffect(() => {
-      axios.get('http://localhost:4000/obtenerUsuarios')
-        .then(response => {
-          setData(response.data.datos);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }, []);
-  
-    const columns = [
-      { field: 'idUsuario', headerName: 'ID', width: 100 },
-      { field: 'Correo', headerName: 'Correo', width: 200 },
-      { field: 'NombreRol', headerName: 'Permiso', width: 200 },
-      { 
-        field: 'Activo',
-        headerName: 'Estado',
-        width: 200,
-        valueGetter: (params) => (params.value ? 'Activo' : 'Inactivo')
-      },
-    ];
-  
-    return (
-      <div>
-        <DataGrid rows={data} columns={columns} getRowId={(row) => row.idUsuario} />
-      </div>
-    );
-  };
-  
-  export default DataGridUsuarios;
+  const [data, setData] = useState([]);
+
+  const eliminarUsuario = async (ID) => {
+    axios.post('http://localhost:4000/actualizarUsuarios', {
+      idUsuario: ID,
+    })
+      .then(function () {
+        const newData = data.filter(usuario => usuario.idUsuario !== ID);
+        setData(newData);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  useEffect(() => {
+    axios.get('http://localhost:4000/obtenerUsuarios')
+      .then(response => {
+        setData(response.data.datos);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+  const columns = [
+    { field: 'idUsuario', headerName: 'ID', width: 100 },
+    { field: 'Correo', headerName: 'Correo', width: 200 },
+    { field: 'NombreRol', headerName: 'Permiso', width: 200 },
+    {
+      field: 'Activo',
+      headerName: 'Acciones',
+      width: 200,
+      renderCell: (params) => (
+        <Button variant="contained" color="secondary" onClick={() => eliminarUsuario(params.row.idUsuario)}>
+          <DeleteIcon />
+          Eliminar
+        </Button>
+      ),
+    },
+  ];
+
+  return (
+    <div>
+      <DataGrid rows={data} columns={columns} getRowId={(row) => row.idUsuario} />
+    </div>
+  );
+};
+
+export default DataGridUsuarios;
