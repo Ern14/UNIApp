@@ -1,19 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import { toastOptions } from '../../../shared/toastOptions';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import './ModalUsuarios.css';
-
-const toastOptions = {
-    position: "bottom-center",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-};
 
 const ModalUsuarios = ({ estado, cambiarEstado }) => {
 
@@ -124,18 +114,7 @@ const ModalUsuarios = ({ estado, cambiarEstado }) => {
                             >
                                 Cerrar</button>
                         </div>
-                        <ToastContainer
-                            position="bottom-center"
-                            autoClose={5000}
-                            hideProgressBar={false}
-                            newestOnTop={false}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss
-                            draggable
-                            pauseOnHover
-                            theme="light"
-                        />
+                        <ToastContainer/>
                     </div>
                 </div>
             }
