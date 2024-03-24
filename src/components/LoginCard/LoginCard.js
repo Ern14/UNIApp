@@ -1,16 +1,10 @@
 import { React, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import { toastOptions } from '../../shared/toastOptions';
-import axios from 'axios';
+import { login } from '../../services/inicio-sesion.service';
 
-import 'react-toastify/dist/ReactToastify.css';
 import "./LoginCard.css";
 
-const LoginCard = () => {
+const LoginCard = ({ onSuccess, onWarning, onError }) => {
 
-    const notifySuccess = (mensaje) => toast.success(mensaje, toastOptions);
-    const notifyWarning = (mensaje) => toast.warn(mensaje, toastOptions);
-    const notifyError = (error) => toast.error(error, toastOptions);
 
     const [body, setBody] = useState({
         Correo: null,
@@ -26,21 +20,20 @@ const LoginCard = () => {
 
     }
 
-    const onSubmit = async () => {
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
         try {
-            await axios.post('http://localhost:4000/validarUsuario', body)
-                .then(({ response }) => {
-                    notifySuccess(response.data.datos.mensaje)
-                }).catch(({ response }) => {
-                    if(response.data.statusCode === 404){
-                        notifyWarning(response.data.datos)
-                    }else{
-                        notifyError(response.data.datos)
-                    }
-                })
+            const datos = await login(body);
+            onSuccess(datos.mensaje);
 
         } catch (error) {
-            notifyError(error);
+            if (!error.statusCode === 400){
+                onError(error.datos);
+            }else{
+                onWarning(error.datos.mensaje)
+            }
+            
         }
 
     }
@@ -80,7 +73,6 @@ const LoginCard = () => {
 
                 </div>
             </form>
-            <ToastContainer/>
         </div>
     );
 };
