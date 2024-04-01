@@ -1,11 +1,13 @@
 import { React, useState } from 'react';
 import { login } from '../../services/inicio-sesion.service';
+import { useAuth } from '../../context/authContext';
 
 import "./LoginCard.css";
 
+
 const LoginCard = ({ onSuccess, onWarning, onError }) => {
-
-
+    const { signin } = useAuth();
+    
     const [body, setBody] = useState({
         Correo: null,
         Contraseña: null
@@ -25,8 +27,8 @@ const LoginCard = ({ onSuccess, onWarning, onError }) => {
 
         try {
             const datos = await login(body);
+            signin(datos);
             onSuccess(datos.mensaje);
-
         } catch (error) {
             if (!error.statusCode === 400){
                 onError(error.datos);

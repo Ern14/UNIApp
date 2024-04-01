@@ -1,4 +1,6 @@
-import React from 'react';
+import { React, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/authContext';
 import { ToastContainer, toast } from 'react-toastify';
 import { toastOptions } from '../../shared/toastOptions';
 
@@ -11,6 +13,12 @@ const PaginaInicioSesion = () => {
   const notifySuccess = (mensaje) => toast.success(mensaje, toastOptions);
   const notifyWarning = (mensaje) => toast.warn(mensaje, toastOptions);
   const notifyError = (error) => toast.error(error, toastOptions);
+  const navigate = useNavigate();
+  const {isAuthenticated} = useAuth();
+
+  useEffect(() =>{
+    if(isAuthenticated) navigate('/');
+  },[isAuthenticated]);
 
   return (
     <div>
