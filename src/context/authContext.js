@@ -18,7 +18,15 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     const signin = async (data) => {
+        setIsAuthenticated(true);
         setUser(data);
+    }
+
+    
+    const logout = async () => {
+        Cookies.remove("token");
+        setIsAuthenticated(false);
+        setUser(null);
     }
 
     useEffect(() => {
@@ -32,7 +40,6 @@ export const AuthProvider = ({ children }) => {
 
             try {
                 const resp = await verificarToken(cookies.token);
-                console.log(resp)
                 if (!resp) {
                     setIsAuthenticated(false);
                     setLoading(false);
@@ -50,11 +57,12 @@ export const AuthProvider = ({ children }) => {
 
         }
         checkLogin();
-    }, []);
+    }, [isAuthenticated]);
 
     return (
         <AuthContext.Provider value={{
             signin,
+            logout,
             user,
             isAuthenticated,
             loading

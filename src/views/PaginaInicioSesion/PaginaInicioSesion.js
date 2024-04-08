@@ -23,7 +23,7 @@ const PaginaInicioSesion = () => {
   return (
     <div>
       <Header />
-      <LoginCard
+      <LoginCard isAuthenticated={isAuthenticated}
         onSuccess={notifySuccess} 
         onWarning={notifyWarning} 
         onError={notifyError} 

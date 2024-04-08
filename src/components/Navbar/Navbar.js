@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/authContext';
 
 import './Navbar.css';
 
 
 const Navbar = () => {
+    const { logout} = useAuth();
     return(
         <header className='navbar'>
             <div className='navbuttons'>
@@ -20,6 +22,11 @@ const Navbar = () => {
                     </li>
                     <li>
                         <Link to='http://localhost:3000/catalogo'>Catálogos</Link>
+                    </li>
+                    <li>
+                        <Link to='http://localhost:3000/' onClick={() => {
+                            logout();
+                        }}>Cerrar Sesion</Link>
                     </li>
                 </ul>
             </div>

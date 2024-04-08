@@ -1,12 +1,14 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { login } from '../../services/inicio-sesion.service';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 
 import "./LoginCard.css";
 
 
-const LoginCard = ({ onSuccess, onWarning, onError }) => {
+const LoginCard = ({ onSuccess, onWarning, onError, isAuthenticated }) => {
     const { signin } = useAuth();
+    const navigate = useNavigate();
     
     const [body, setBody] = useState({
         Correo: null,
@@ -39,6 +41,10 @@ const LoginCard = ({ onSuccess, onWarning, onError }) => {
         }
 
     }
+
+    useEffect(() =>{
+        if(isAuthenticated) navigate('/');
+      },[isAuthenticated]);
     
     return (
         <div className='card'>

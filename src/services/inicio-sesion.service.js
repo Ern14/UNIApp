@@ -10,6 +10,7 @@ export const login = async (body) => {
     }
 }
 
+
 export const verificarToken = async () => {
     try {
         const response = await axios.get(`${enviroment.localhost}/auth/verificarToken`);
