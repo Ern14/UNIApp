@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { login } from '../../services/inicio-sesion.service';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
+import { TextField, Button } from '@mui/material';
 
 import "./LoginCard.css";
 
@@ -9,7 +10,7 @@ import "./LoginCard.css";
 const LoginCard = ({ onSuccess, onWarning, onError, isAuthenticated }) => {
     const { signin } = useAuth();
     const navigate = useNavigate();
-    
+
     const [body, setBody] = useState({
         Correo: null,
         Contraseña: null
@@ -21,66 +22,79 @@ const LoginCard = ({ onSuccess, onWarning, onError, isAuthenticated }) => {
             ...body,
             [name]: value
         })
-
     }
 
     const onSubmit = async (e) => {
         e.preventDefault();
-
         try {
             const datos = await login(body);
             signin(datos);
             onSuccess(datos.mensaje);
         } catch (error) {
-            if (!error.statusCode === 400){
+            if (!error.statusCode === 400) {
                 onError(error.datos);
-            }else{
+            } else {
                 onWarning(error.datos.mensaje)
             }
-            
+
         }
 
     }
 
-    useEffect(() =>{
-        if(isAuthenticated) navigate('/');
-      },[isAuthenticated]);
-    
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/inicio')
+        };
+    }, [isAuthenticated, navigate]);
+
     return (
         <div className='card'>
-            <p>Iniciar Sesion</p>
+            <p>Iniciar sesión</p>
             <form>
-                <div className='textfield'>
-                    <input
-                        type="email"
-                        required
-                        value={body.correo}
-                        onChange={inputChange}
-                        name='Correo'
-                    />
-                    <span></span>
-                    <label>Correo</label>
-                </div>
-                <div className='textfield'>
-                    <input
-                        type="password"
-                        required
-                        value={body.contraseña}
-                        onChange={inputChange}
-                        name='Contraseña'
-                    />
-                    <span></span>
-                    <label>Contraseña</label>
-                </div>
-                <div className="submitbutton">
-                    <input
-                        type="submit"
-                        value="Ingresar"
-                        onClick={onSubmit}
-                    />
+                <div className="container">
+                    <div className="column">
+                        <div className="row">
+                            <TextField
+                                className='input'
+                                name='Correo'
+                                label="Correo"
+                                variant="standard"
+                                value={body.correo}
+                                onChange={inputChange}
+                            />
+                        </div>
+                        <div className="row">
+                            <TextField
+                                className='input'
+                                type="password"
+                                name='Contraseña'
+                                label="Contraseña"
+                                variant="standard"
+                                value={body.contraseña}
+                                onChange={inputChange}
+                            />
+                        </div>
 
+                    </div>
+                </div>
+                <div className="buttonContainer">
+                    <Button
+                        className='botonSubmit'
+                        variant="contained"
+                        onClick={onSubmit}>
+                        Ingresar
+                    </Button>
                 </div>
             </form>
+            <div className="registroContainer">
+                <label className='registro'>
+                    O cree un nuevo usuario
+                </label>
+                <Button
+                    color="secondary">
+                    Registrarse
+                </Button>
+            </div>
         </div>
     );
 };

@@ -4,6 +4,7 @@ import PaginaInicioSesion from './views/PaginaInicioSesion/PaginaInicioSesion';
 import PaginaInicio from "./views/PaginaInicio/PaginaInicio";
 import ProtectedRoute from "./ProtectedRoute";
 import NotFound from "./views/NotFoundPage/NotFound";
+import './App.css';
 
 const App = () => {
   return(

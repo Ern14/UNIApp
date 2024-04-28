@@ -17,8 +17,10 @@ const PaginaInicioSesion = () => {
   const {isAuthenticated} = useAuth();
 
   useEffect(() =>{
-    if(isAuthenticated) navigate('/');
-  },[isAuthenticated]);
+    if(isAuthenticated){
+      navigate('/inicio')
+    };
+  },[isAuthenticated, navigate]);
 
   return (
     <div>

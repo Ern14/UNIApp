@@ -6,7 +6,7 @@ import './Navbar.css';
 
 
 const Navbar = () => {
-    const { logout} = useAuth();
+    const { logout } = useAuth();
     return(
         <header className='navbar'>
             <div className='navbuttons'>

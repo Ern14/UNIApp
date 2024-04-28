@@ -12,7 +12,7 @@ const Header = () => {
                     </figure>
                 </div>
                 <div className="box">
-                    <h1>Universidad Nacional de Ingenieria</h1>
+                    <h1>Universidad Nacional de Ingeniería</h1>
                     <h2>Sistema de Asistencia Docente</h2>
                 </div>
             </div>

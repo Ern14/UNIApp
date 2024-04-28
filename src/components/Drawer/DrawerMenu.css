@@ -1,0 +1,23 @@
+.drawer{
+    width: 240px;
+}
+
+.imgLogo{
+    width: 90px;
+    height: 60px;
+}
+
+.menu-usuario{
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.icon-acordeon{
+    color: gray;
+}
+
+.label-text{
+    padding-left: 30px;
+}

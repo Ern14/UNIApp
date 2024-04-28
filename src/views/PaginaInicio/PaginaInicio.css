@@ -1,11 +1,10 @@
-.parent {
-    position: inherit;
-    height: 100%;
+.body {
+    display: flex;
+    width: 100%;
 }
 
-.container{
-    display: flex;
-    height: 100%;
+.main-container{
+    flex-direction: column;
     width: 100%;
 }
 
