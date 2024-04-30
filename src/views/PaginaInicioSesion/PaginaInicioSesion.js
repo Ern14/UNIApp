@@ -7,6 +7,7 @@ import { toastOptions } from '../../shared/toastOptions';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import LoginCard from '../../components/LoginCard/LoginCard';
+import './PaginaInicioSesion';
 
 
 const PaginaInicioSesion = () => {
@@ -23,7 +24,7 @@ const PaginaInicioSesion = () => {
   },[isAuthenticated, navigate]);
 
   return (
-    <div>
+    <div className='container'>
       <Header />
       <LoginCard isAuthenticated={isAuthenticated}
         onSuccess={notifySuccess} 

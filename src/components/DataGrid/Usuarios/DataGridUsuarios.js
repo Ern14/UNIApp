@@ -3,6 +3,7 @@ import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { obtenerUsuarios } from '../../../services/usuarios.service';
 
 const DataGridUsuarios = () => {
   const [data, setData] = useState([]);
@@ -21,13 +22,11 @@ const DataGridUsuarios = () => {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:4000/obtenerUsuarios')
-      .then(response => {
-        setData(response.data.datos);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    const get = async () => {
+      const data = await obtenerUsuarios();
+      setData(data);
+    }
+    get();
   }, []);
 
   const columns = [
