@@ -1,10 +1,5 @@
-.topbar{
-    width: 100%;
-    position: absolute;
-    background-color: darkblue;
-}
 
-.topbar .group{
+.group{
     width: 100%;
     max-width: 1200px;
     margin: auto;
@@ -14,7 +9,7 @@
     padding: 15px 0px;
 }
 
-.topbar .group .box figure {
+.group .box figure {
     width: 100%;
     height: 100%;
     display: flex;
@@ -22,18 +17,18 @@
     align-items: center;
 }
 
-.topbar .group .box figure img {
+.group .box figure img {
     width: 160px;
     height: 100px;
     margin-bottom: 20px;
 }
 
-.topbar .group .box h1 {
+.group .box h1 {
     color: white;
     font-size: 30px;
 }
 
-.topbar .group .box h2 {
+.group .box h2 {
     font-size: 20px;
     color: white;
 }

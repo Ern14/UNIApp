@@ -1,10 +1,16 @@
 import React from "react";
-import "./Header.css";
+import { AppBar } from "@mui/material";
 import logo from "../../assets/img/logos/logouni12.png";
+import "./Header.css";
+
 
 const Header = () => {
     return (
-        <header className="topbar">
+        <AppBar sx = {{
+            backgroundColor: 'darkblue',
+            width: '100%',
+            height: '180px'
+        }}>
             <div className="group">
                 <div className="box">
                     <figure>
@@ -16,7 +22,7 @@ const Header = () => {
                     <h2>Sistema de Asistencia Docente</h2>
                 </div>
             </div>
-        </header>
+        </AppBar>
     );
 }
  

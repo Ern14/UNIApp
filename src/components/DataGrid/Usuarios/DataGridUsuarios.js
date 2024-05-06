@@ -1,32 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { obtenerUsuarios } from '../../../services/usuarios.service';
+import { obtenerUsuarios, eliminarUsuarios } from '../../../services/usuarios.service';
 
 const DataGridUsuarios = () => {
   const [data, setData] = useState([]);
 
-  const eliminarUsuario = async (ID) => {
-    axios.post('http://localhost:4000/actualizarUsuarios', {
-      idUsuario: ID,
-    })
-      .then(function () {
-        const newData = data.filter(usuario => usuario.idUsuario !== ID);
-        setData(newData);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const cargarDatos = async () => {
+    const data = await obtenerUsuarios();
+    setData(data);
+  }
+
+  const eliminarUsuario = async (idUsuario) => {
+    const data = await eliminarUsuarios(idUsuario);
+    if(data.status === "Exito"){
+      cargarDatos();
+    }
   }
 
   useEffect(() => {
-    const get = async () => {
-      const data = await obtenerUsuarios();
-      setData(data);
-    }
-    get();
+    cargarDatos();
   }, []);
 
   const columns = [
@@ -40,7 +34,6 @@ const DataGridUsuarios = () => {
       renderCell: (params) => (
         <Button variant="contained" color="secondary" onClick={() => eliminarUsuario(params.row.idUsuario)}>
           <DeleteIcon />
-          Eliminar
         </Button>
       ),
     },
@@ -48,7 +41,20 @@ const DataGridUsuarios = () => {
 
   return (
     <div>
-      <DataGrid rows={data} columns={columns} getRowId={(row) => row.idUsuario} />
+      <DataGrid sx={{
+        Height: '500px'
+      }} 
+        rows={data} columns={columns} 
+        getRowId={(row) => row.idUsuario} 
+        initialState={{
+        pagination: {
+          paginationModel: {
+            pageSize: 8,
+          },   
+        },
+        }}
+        pageSizeOptions={[8, 10, 12]} 
+      />
     </div>
   );
 };
