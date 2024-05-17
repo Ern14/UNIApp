@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AppBar, Button, Typography, Card, InputAdornment } from '@mui/material';
 import { Search } from '@mui/icons-material'
 import DataGridUsuarios from '../../../../components/DataGrid/Usuarios/DataGridUsuarios';
 import Controls from '../../../../components/Controls/Controls'
-import ModalUsuarios from '../../../../components/Modal/Usuarios/ModalUsuarios';
 
 import './SeccionUsuarios.css'
 
 const SeccionUsuarios = () => {
-
-    const [estadoModal, cambiarEstado] = useState(false);
 
     const handleChange = (e) => {
         console.log(e.target.value)
@@ -55,14 +52,14 @@ const SeccionUsuarios = () => {
                             sx={{
                                 backgroundColor: 'darkblue'
                             }}
-                            variant="contained">
+                            variant="contained"
+                            >
                                 Agregar
-                            </Button>
+                        </Button>
                     </div>
                     <div className='grid'>
                         <DataGridUsuarios />
                     </div>
-
                 </Card>
             </div>
         </div>

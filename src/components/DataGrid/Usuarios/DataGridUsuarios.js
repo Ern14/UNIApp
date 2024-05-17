@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton, Tooltip } from '@mui/material';
+import { Delete, Edit } from '@mui/icons-material';
 import { obtenerUsuarios, eliminarUsuarios } from '../../../services/usuarios.service';
+import Confirmation from '../../Dialog/Confimation/Confirmation';
 
 const DataGridUsuarios = () => {
   const [data, setData] = useState([]);
+  const [estado, setEstado] = useState(false);
+  const [idUsuario, setIdUsuario] = useState();
 
   const cargarDatos = async () => {
     const data = await obtenerUsuarios();
     setData(data);
   }
 
-  const eliminarUsuario = async (idUsuario) => {
-    const data = await eliminarUsuarios(idUsuario);
-    if(data.status === "Exito"){
-      cargarDatos();
-    }
+  const handleDialog = (idUsuario) => {
+    setEstado(true);
+    setIdUsuario(idUsuario);
+  };
+
+  const eliminarUsuario = async () => {
+      const data = await eliminarUsuarios(idUsuario);
+      if(data.status === "Exito"){
+        cargarDatos();
+      }
   }
 
   useEffect(() => {
@@ -32,9 +40,18 @@ const DataGridUsuarios = () => {
       headerName: 'Acciones',
       width: 200,
       renderCell: (params) => (
-        <Button variant="contained" color="secondary" onClick={() => eliminarUsuario(params.row.idUsuario)}>
-          <DeleteIcon />
-        </Button>
+        <div>
+          <Tooltip title = "Editar">
+            <IconButton variant="contained" color="primary" onClick={() => handleDialog(params.row.idUsuario)}>
+              <Edit />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title = "Eliminar">
+            <IconButton variant="contained" color="secondary" onClick={() => handleDialog(params.row.idUsuario)}>
+              <Delete />
+            </IconButton>
+          </Tooltip>
+        </div>
       ),
     },
   ];
@@ -54,6 +71,11 @@ const DataGridUsuarios = () => {
         },
         }}
         pageSizeOptions={[8, 10, 12]} 
+      />
+      <Confirmation
+        estado={estado}
+        setEstado={setEstado}
+        onConfirm={eliminarUsuario}
       />
     </div>
   );
