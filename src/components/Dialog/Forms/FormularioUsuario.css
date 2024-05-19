@@ -1,0 +1,12 @@
+.main-container {
+    width: 600px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-box {
+    padding-top: 20px;
+}

@@ -1,35 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { IconButton, Tooltip } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
-import { obtenerUsuarios, eliminarUsuarios } from '../../../services/usuarios.service';
-import Confirmation from '../../Dialog/Confimation/Confirmation';
 
-const DataGridUsuarios = () => {
-  const [data, setData] = useState([]);
-  const [estado, setEstado] = useState(false);
-  const [idUsuario, setIdUsuario] = useState();
+const DataGridUsuarios = (props) => {
+  const {handleForm, handleConfirm, data} = props;
 
-  const cargarDatos = async () => {
-    const data = await obtenerUsuarios();
-    setData(data);
-  }
-
-  const handleDialog = (idUsuario) => {
-    setEstado(true);
-    setIdUsuario(idUsuario);
+  const handleConfirmLocal = (idUsuario) => {
+    handleConfirm(idUsuario);
   };
 
-  const eliminarUsuario = async () => {
-      const data = await eliminarUsuarios(idUsuario);
-      if(data.status === "Exito"){
-        cargarDatos();
-      }
+  const handleFormLocal = (idUsuario) => {
+    handleForm(idUsuario);
   }
-
-  useEffect(() => {
-    cargarDatos();
-  }, []);
 
   const columns = [
     { field: 'idUsuario', headerName: 'ID', width: 100 },
@@ -42,12 +25,12 @@ const DataGridUsuarios = () => {
       renderCell: (params) => (
         <div>
           <Tooltip title = "Editar">
-            <IconButton variant="contained" color="primary" onClick={() => handleDialog(params.row.idUsuario)}>
+            <IconButton variant="contained" color="primary" onClick={() => handleFormLocal(params.row.idUsuario)}>
               <Edit />
             </IconButton>
           </Tooltip>
           <Tooltip title = "Eliminar">
-            <IconButton variant="contained" color="secondary" onClick={() => handleDialog(params.row.idUsuario)}>
+            <IconButton variant="contained" color="secondary" onClick={() => handleConfirmLocal(params.row.idUsuario)}>
               <Delete />
             </IconButton>
           </Tooltip>
@@ -71,11 +54,6 @@ const DataGridUsuarios = () => {
         },
         }}
         pageSizeOptions={[8, 10, 12]} 
-      />
-      <Confirmation
-        estado={estado}
-        setEstado={setEstado}
-        onConfirm={eliminarUsuario}
       />
     </div>
   );
