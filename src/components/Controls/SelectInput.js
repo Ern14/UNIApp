@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const SelectInput = (props) => {
-    const [value, setValue] = useState('');
-
-    const { label, items, onChange } = props;
+    const { label, items, onChange, value } = props;
 
     const handleChange = (event) => {
-        setValue(event.target.value);
         onChange(event.target.value);
     };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { insertarUsuario } from '../../../services/usuarios.service';
+import { insertarUsuario, obtenerUsuarioxId } from '../../../services/usuarios.service';
 import { Dialog, DialogTitle, DialogContent, DialogActions, InputAdornment, Button } from "@mui/material";
 import { Email, Password } from '@mui/icons-material';
 import Controls from '../../Controls/Controls';
@@ -18,8 +18,9 @@ const FormularioUsuario = (props) => {
     };
 
     const cargarDatos = async () => {
-        //const result = await obtenerRoles();
-        console.log('Cargando datos de:', idUsuario);
+        const result = await obtenerUsuarioxId(idUsuario);
+        setCorreo(result.datos[0].Correo);
+        setPermiso(result.datos[0].FK_idRol);
     };
 
     const onSubmit = async () => {
@@ -62,6 +63,7 @@ const FormularioUsuario = (props) => {
                         <div className='input-box'>
                             <Controls.TextInput
                                 label="Correo"
+                                value={correo}
                                 onChange={(e) => setCorreo(e.target.value)}
                                 InputProps={{
                                     startAdornment: (
@@ -72,23 +74,26 @@ const FormularioUsuario = (props) => {
                                 }}
                             />
                         </div>
-                        <div className='input-box'>
-                            <Controls.TextInput
-                                label="Contraseña"
-                                type="password"
-                                onChange={e => setContrasena(e.target.value)}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <Password />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </div>
+                        {!idUsuario && (
+                            <div className='input-box'>
+                                <Controls.TextInput
+                                    label="Contraseña"
+                                    type="password"
+                                    onChange={e => setContrasena(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Password />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </div>
+                        )}
                         <div className='input-box'>
                             <Controls.SelectInput
                                 label="Permiso"
+                                value={permiso}
                                 onChange={setPermiso}
                                 items={permisos}
                             />

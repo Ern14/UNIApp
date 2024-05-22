@@ -11,10 +11,10 @@ export const obtenerUsuarios = async () => {
 
 };
 
-export const obtenerUsuarioxId = async () => {
+export const obtenerUsuarioxId = async (idUsuario) => {
     try {
-        const response = await axios.get(`${enviroment.localhost}/obtenerUsuarios`);
-        return response.data.datos;
+        const response = await axios.get(`${enviroment.localhost}/filtrarUsuarios/${idUsuario}`);
+        return response.data;
     } catch (error) {
         throw error.response.data;
     }
