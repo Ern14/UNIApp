@@ -1,8 +1,7 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
-import { ToastContainer, toast } from 'react-toastify';
-import { toastOptions } from '../../shared/toastOptions';
+import { Snackbar, Alert } from '@mui/material';
 
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
@@ -11,9 +10,20 @@ import './PaginaInicioSesion';
 
 
 const PaginaInicioSesion = () => {
-  const notifySuccess = (mensaje) => toast.success(mensaje, toastOptions);
-  const notifyWarning = (mensaje) => toast.warn(mensaje, toastOptions);
-  const notifyError = (error) => toast.error(error, toastOptions);
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+
+  const handleSnackbarOpen = (result) => {
+    if (result.statusCode === 200){
+      setSnackbar({ open: true, message: result.datos.mensaje, severity: "success" });
+    }else{
+      setSnackbar({ open: true, message: result.datos.mensaje, severity: "warning" });
+    }
+  }
+
+  const handleSnackbarClose = () => {
+    setSnackbar({ open: false, message: "", severity: "success" });
+  }
+
   const navigate = useNavigate();
   const {isAuthenticated} = useAuth();
 
@@ -27,12 +37,21 @@ const PaginaInicioSesion = () => {
     <div className='container'>
       <Header />
       <LoginCard isAuthenticated={isAuthenticated}
-        onSuccess={notifySuccess} 
-        onWarning={notifyWarning} 
-        onError={notifyError} 
+        onConfirm={handleSnackbarOpen} 
       />
       <Footer />
-      <ToastContainer/>
+      <Snackbar
+                open={snackbar.open}
+                autoHideDuration={5000}
+                onClose={handleSnackbarClose}
+                >
+                <Alert
+                    severity={snackbar.severity}
+                    variant='filled'
+                    >     
+                        {snackbar.message}
+                </Alert>
+      </Snackbar>
     </div>
   );
 }

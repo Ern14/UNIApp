@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { eliminarUsuarios, obtenerUsuarios } from '../../../../services/usuarios.service';
+import { eliminarUsuarios, obtenerUsuarios, filtrarUsuariosxBusqueda } from '../../../../services/usuarios.service';
 import { obtenerRoles } from '../../../../services/roles.service';
-import { AppBar, Button, Typography, Card, InputAdornment } from '@mui/material';
+import { AppBar, Button, Typography, Card, InputAdornment, Snackbar, Alert } from '@mui/material';
 import { Search } from '@mui/icons-material'
 import DataGridUsuarios from '../../../../components/DataGrid/Usuarios/DataGridUsuarios';
 import Controls from '../../../../components/Controls/Controls'
@@ -16,7 +16,8 @@ const SeccionUsuarios = () => {
     const [estadoConfirm, setEstadoConfirm] = useState(false);
     const [roles, setRoles] = useState([]);
     const [idUsuario, setIdUsuario] = useState(null);
-    
+    const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+
     const cargarDatos = async () => {
         const data = await obtenerUsuarios();
         setData(data);
@@ -29,13 +30,15 @@ const SeccionUsuarios = () => {
 
     const eliminarUsuario = async () => {
         const data = await eliminarUsuarios(idUsuario);
-        if(data.status === "Exito"){
-          cargarDatos();
+        handleSnackbarOpen(data);
+        if (data.status === "Exito") {
+            cargarDatos();
         }
     };
 
-    const handleChange = (e) => {
-        console.log(e.target.value)
+    const handleChange = async (e) => {
+        const result = await filtrarUsuariosxBusqueda(e.target.value);
+        setData(result);
     };
 
     const handleForm = (idUsuario) => {
@@ -48,10 +51,24 @@ const SeccionUsuarios = () => {
         setEstadoConfirm(true);
     };
 
+    const handleSnackbarOpen = (result) => {
+        if (result.statusCode === 200){
+            cargarDatos();
+            setSnackbar({ open: true, message: result.datos.mensaje, severity: "success" });
+        }else{
+            setSnackbar({ open: true, message: result.datos.mensaje, severity: "warning" });
+        }
+    
+    };
+
+    const handleSnackbarClose = () => {
+        setSnackbar({ open: false, message: "", severity: "success" });
+    };
+
     useEffect(() => {
         cargarDatos();
         cargarRoles();
-    },[]);
+    }, []);
 
     const styles = {
         appbar: {
@@ -98,16 +115,16 @@ const SeccionUsuarios = () => {
                                 ),
                             }}
                         />
-                        <Button 
+                        <Button
                             sx={styles.button}
                             variant="contained"
                             onClick={() => handleForm(null)}
-                            >
-                                Agregar
+                        >
+                            Agregar
                         </Button>
                     </div>
                     <div className='grid'>
-                        <DataGridUsuarios 
+                        <DataGridUsuarios
                             handleForm={handleForm}
                             handleConfirm={handleConfirm}
                             data={data}
@@ -120,12 +137,25 @@ const SeccionUsuarios = () => {
                 setEstado={setEstado}
                 idUsuario={idUsuario}
                 roles={roles}
+                onConfirm={handleSnackbarOpen}
             />
             <Confirmation
                 estado={estadoConfirm}
                 setEstado={setEstadoConfirm}
                 onConfirm={eliminarUsuario}
             />
+            <Snackbar
+                open={snackbar.open}
+                autoHideDuration={5000}
+                onClose={handleSnackbarClose}
+                >
+                <Alert
+                    severity={snackbar.severity}
+                    variant='filled'
+                    >     
+                        {snackbar.message}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }

@@ -6,7 +6,20 @@ export const obtenerUsuarios = async () => {
         const response = await axios.get(`${enviroment.localhost}/obtenerUsuarios`);
         return response.data.datos;
     } catch (error) {
-        throw error.response.data;
+        return error.response.data;
+    }
+
+};
+
+export const filtrarUsuariosxBusqueda = async (busqueda) => {
+    try {
+        const body = {
+            Busqueda: busqueda
+        };
+        const response = await axios.post(`${enviroment.localhost}/filtrarUsuariosxBusqueda`, body );
+        return response.data.datos;
+    } catch (error) {
+        return error.response.data;
     }
 
 };
@@ -16,7 +29,7 @@ export const obtenerUsuarioxId = async (idUsuario) => {
         const response = await axios.get(`${enviroment.localhost}/filtrarUsuarios/${idUsuario}`);
         return response.data;
     } catch (error) {
-        throw error.response.data;
+        return error.response.data;
     }
 
 };
@@ -31,7 +44,22 @@ export const insertarUsuario = async (modUsuario) => {
         const response = await axios.post(`${enviroment.localhost}/insertarUsuarios`, body);
         return response.data;
     } catch (error) {
-        throw error.response.data;
+        return error.response.data;
+    }
+
+};
+
+export const actualizarUsuario = async (modUsuario) => {
+    try {
+        const body = {
+            IdUsuario: modUsuario.idUsuario,
+            Correo: modUsuario.correo,
+            FK_idRol: modUsuario.permiso
+        };
+        const response = await axios.put(`${enviroment.localhost}/actualizarUsuarios`, body);
+        return response.data;
+    } catch (error) {
+        return error.response.data;
     }
 
 };
@@ -44,7 +72,7 @@ export const eliminarUsuarios = async (idUsuario) => {
         const response = await axios.delete(`${enviroment.localhost}/eliminarUsuarios`, { data });
         return response.data;
     } catch (error) {
-        throw error.response.data;
+        return error.response.data;
     }
 
 };

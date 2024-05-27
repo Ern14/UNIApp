@@ -1,36 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { insertarUsuario, obtenerUsuarioxId } from '../../../services/usuarios.service';
+import { actualizarUsuario, insertarUsuario, obtenerUsuarioxId } from '../../../services/usuarios.service';
 import { Dialog, DialogTitle, DialogContent, DialogActions, InputAdornment, Button } from "@mui/material";
 import { Email, Password } from '@mui/icons-material';
 import Controls from '../../Controls/Controls';
+import { useAuth } from '../../../context/authContext';
 
 import './FormularioUsuario.css';
 
 const FormularioUsuario = (props) => {
-    const { estado, setEstado, idUsuario, roles } = props;
+    const { estado, setEstado, idUsuario, roles, onConfirm } = props;
 
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
-    const [permiso, setPermiso] = useState('');
+    const [permiso, setPermiso] = useState(1);
+
+    const { user } = useAuth();
 
     const handleClose = () => {
         setEstado(false);
     };
 
-    const cargarDatos = async () => {
-        const result = await obtenerUsuarioxId(idUsuario);
-        setCorreo(result.datos[0].Correo);
-        setPermiso(result.datos[0].FK_idRol);
-    };
-
     const onSubmit = async () => {
         const modUsuario = {
+            idUsuario,
             correo,
             contrasena,
             permiso
         }
-        const result = await insertarUsuario(modUsuario);
-        handleClose();
+        let result = null;
+        if(idUsuario){
+            result = await actualizarUsuario(modUsuario);
+        }else{  
+            result = await insertarUsuario(modUsuario);
+        }
+        if(result.statusCode === 200){
+            handleClose();
+        }
+        onConfirm(result);
     };
 
     const permisos = roles;
@@ -43,6 +49,11 @@ const FormularioUsuario = (props) => {
     };
 
     useEffect(() => {
+        const cargarDatos = async () => {
+            const result = await obtenerUsuarioxId(idUsuario);
+            setCorreo(result.datos[0].Correo);
+            setPermiso(result.datos[0].FK_idRol);
+        };
         if (idUsuario) {
             cargarDatos();
         };
@@ -96,6 +107,7 @@ const FormularioUsuario = (props) => {
                                 value={permiso}
                                 onChange={setPermiso}
                                 items={permisos}
+                                disabled={user.idUsuario === idUsuario ? true : false}
                             />
                         </div>
                     </div>

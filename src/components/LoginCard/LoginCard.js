@@ -7,7 +7,7 @@ import { TextField, Button } from '@mui/material';
 import "./LoginCard.css";
 
 
-const LoginCard = ({ onSuccess, onWarning, onError, isAuthenticated }) => {
+const LoginCard = ({ isAuthenticated, onConfirm }) => {
     const { signin } = useAuth();
     const navigate = useNavigate();
 
@@ -26,19 +26,11 @@ const LoginCard = ({ onSuccess, onWarning, onError, isAuthenticated }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const datos = await login(body);
-            signin(datos);
-            onSuccess(datos.mensaje);
-        } catch (error) {
-            if (!error.statusCode === 400) {
-                onError(error.datos);
-            } else {
-                onWarning(error.datos.mensaje)
+            const result = await login(body);
+            if (result.statusCode === 200) {
+                signin(result);
             }
-
-        }
-
+            onConfirm(result);
     }
 
     useEffect(() => {
