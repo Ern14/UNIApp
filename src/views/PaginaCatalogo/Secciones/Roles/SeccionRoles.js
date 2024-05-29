@@ -1,35 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { eliminarUsuarios, obtenerUsuarios, filtrarUsuariosxBusqueda } from '../../../../services/usuarios.service';
-import { obtenerRoles } from '../../../../services/roles.service';
 import { AppBar, Button, Typography, Card, InputAdornment, Snackbar, Alert } from '@mui/material';
 import { Search } from '@mui/icons-material';
-import DataGridUsuarios from '../../../../components/DataGrid/Usuarios/DataGridUsuarios';
-import Controls from '../../../../components/Controls/Controls'
-import FormularioUsuario from '../../../../components/Dialog/Forms/FormularioUsuario';
+import { obtenerRoles, filtrarRolesxBusqueda, eliminarRoles } from '../../../../services/roles.service';
+import DataGridRoles from '../../../../components/DataGrid/Roles/DataGridRoles';
+import FormularioRoles from '../../../../components/Dialog/Forms/Roles/FormularioRoles';
+import Controls from '../../../../components/Controls/Controls';
 import Confirmation from '../../../../components/Dialog/Confimation/Confirmation';
 
-import './SeccionUsuarios.css';
+import './SeccionRoles.css';
 
-const SeccionUsuarios = () => {
+const SeccionRoles = () => {
     const [data, setData] = useState([]);
     const [estado, setEstado] = useState(false);
     const [estadoConfirm, setEstadoConfirm] = useState(false);
-    const [roles, setRoles] = useState([]);
-    const [idUsuario, setIdUsuario] = useState(null);
+    const [idRol, setIdRol] = useState(null);
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
 
     const cargarDatos = async () => {
-        const data = await obtenerUsuarios();
+        const data = await obtenerRoles();
         setData(data);
     };
 
-    const cargarRoles = async () => {
-        const result = await obtenerRoles();
-        setRoles(result);
-    };
-
-    const eliminarUsuario = async () => {
-        const data = await eliminarUsuarios(idUsuario);
+    const eliminarRol = async () => {
+        const data = await eliminarRoles(idRol);
         handleSnackbarOpen(data);
         if (data.status === "Exito") {
             cargarDatos();
@@ -37,18 +30,8 @@ const SeccionUsuarios = () => {
     };
 
     const handleChange = async (e) => {
-        const result = await filtrarUsuariosxBusqueda(e.target.value);
+        const result = await filtrarRolesxBusqueda(e.target.value);
         setData(result);
-    };
-
-    const handleForm = (idUsuario) => {
-        setIdUsuario(idUsuario);
-        setEstado(true);
-    };
-
-    const handleConfirm = (idUsuario) => {
-        setIdUsuario(idUsuario);
-        setEstadoConfirm(true);
     };
 
     const handleSnackbarOpen = (result) => {
@@ -65,9 +48,18 @@ const SeccionUsuarios = () => {
         setSnackbar({ open: false, message: "", severity: "success" });
     };
 
+    const handleForm = (idRol) => {
+        setIdRol(idRol);
+        setEstado(true);
+    };
+
+    const handleConfirm = (idRol) => {
+        setIdRol(idRol);
+        setEstadoConfirm(true);
+    };
+
     useEffect(() => {
         cargarDatos();
-        cargarRoles();
     }, []);
 
     const styles = {
@@ -92,18 +84,18 @@ const SeccionUsuarios = () => {
         }
     }
 
-    return (
+    return ( 
         <div className='usuario-container'>
             <AppBar
                 sx={styles.appbar}
             >
                 <Typography
                     sx={styles.typography}
-                >Catálogo usuarios</Typography>
+                >Catálogo roles</Typography>
             </AppBar>
             <div className='info-container'>
                 <Card sx={styles.card}>
-                    <div className='acciones'>
+                <div className='acciones'>
                         <Controls.SearchInput
                             label="Buscar"
                             onChange={handleChange}
@@ -124,7 +116,7 @@ const SeccionUsuarios = () => {
                         </Button>
                     </div>
                     <div className='grid'>
-                        <DataGridUsuarios
+                        <DataGridRoles
                             handleForm={handleForm}
                             handleConfirm={handleConfirm}
                             data={data}
@@ -132,17 +124,16 @@ const SeccionUsuarios = () => {
                     </div>
                 </Card>
             </div>
-            <FormularioUsuario
+            <FormularioRoles
                 estado={estado}
                 setEstado={setEstado}
-                idUsuario={idUsuario}
-                roles={roles}
+                idRol={idRol}
                 onConfirm={handleSnackbarOpen}
             />
             <Confirmation
                 estado={estadoConfirm}
                 setEstado={setEstadoConfirm}
-                onConfirm={eliminarUsuario}
+                onConfirm={eliminarRol}
             />
             <Snackbar
                 open={snackbar.open}
@@ -156,8 +147,8 @@ const SeccionUsuarios = () => {
                         {snackbar.message}
                 </Alert>
             </Snackbar>
-        </div>
+        </div> 
     );
 }
 
-export default SeccionUsuarios;
+export default SeccionRoles;
