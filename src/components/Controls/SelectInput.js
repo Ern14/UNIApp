@@ -2,7 +2,7 @@ import React from 'react';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const SelectInput = (props) => {
-    const { label, items, onChange, value, disabled } = props;
+    const { label, items, onChange, value, disabled, keyField, valueField } = props;
 
     const handleChange = (event) => {
         onChange(event.target.value);
@@ -27,7 +27,7 @@ const SelectInput = (props) => {
             >
                 {
                     items.map(item => (
-                        <MenuItem key={item.idRol} value={item.idRol}>{item.Nombre}</MenuItem>
+                        <MenuItem key={item[keyField]} value={item[keyField]}>{item[valueField]}</MenuItem>
                     ))
                 }
             </Select>

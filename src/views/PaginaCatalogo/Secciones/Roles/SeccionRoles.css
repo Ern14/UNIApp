@@ -1,4 +1,4 @@
-.usuario-container{
+.roles-container{
     position: relative;
     background-color: white;
     flex-direction: column;
@@ -11,7 +11,7 @@
     height: 100%;
 }
 
-.info-container .acciones{
+.acciones-roles{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -22,7 +22,7 @@
     padding-left: 20px;
 }
 
-.info-container .grid{
+.grid-roles{
     min-height: 500px;
     width: 1000px;
     padding-left: 20px;

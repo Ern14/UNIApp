@@ -1,37 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Button, Typography, Card, InputAdornment, Snackbar, Alert } from '@mui/material';
 import { Search } from '@mui/icons-material';
-import { obtenerRoles, filtrarRolesxBusqueda, eliminarRoles } from '../../../../services/roles.service';
+import { obtenerAsignaturas, eliminarAsignaturas, filtrarAsignaturasxBusqueda } from '../../../../services/asignaturas.service';
+import { obtenerPeridos } from '../../../../services/periodos.service';
 import DefaultDataGrid from '../../../../components/DataGrid/DefaultDataGrid';
-import FormularioRoles from '../../../../components/Dialog/Forms/Roles/FormularioRoles';
+import FormularioAsignatura from '../../../../components/Dialog/Forms/Asignaturas/FormularioAsignatura';
 import Controls from '../../../../components/Controls/Controls';
 import Confirmation from '../../../../components/Dialog/Confimation/Confirmation';
-import { Columns } from './RolesColumns';
+import { Columns } from './AsignaturasColumns';
 
-import './SeccionRoles.css';
+import './SeccionAsignaturas.css';
 
-const SeccionRoles = () => {
+const SeccionAsignaturas = () => {
     const [data, setData] = useState([]);
+    const [peridos, setPeriodos] = useState([]);
     const [estado, setEstado] = useState(false);
     const [estadoConfirm, setEstadoConfirm] = useState(false);
-    const [idRol, setIdRol] = useState(null);
+    const [idAsignatura, setIdAsignatura] = useState(null);
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
 
     const cargarDatos = async () => {
-        const data = await obtenerRoles();
+        const data = await obtenerAsignaturas();
         setData(data);
     };
 
-    const eliminarRol = async () => {
-        const data = await eliminarRoles(idRol);
+    const cargarPeriodos = async () => {
+        const result = await obtenerPeridos();
+        setPeriodos(result);
+    };
+
+    const eliminarAsignatura = async () => {
+        const data = await eliminarAsignaturas(idAsignatura);
         handleSnackbarOpen(data);
         if (data.status === "Exito") {
             cargarDatos();
         }
     };
 
+    const handleForm = (idAsignatura) => {
+        setIdAsignatura(idAsignatura);
+        setEstado(true);
+    };
+
     const handleChange = async (e) => {
-        const result = await filtrarRolesxBusqueda(e.target.value);
+        const result = await filtrarAsignaturasxBusqueda(e.target.value);
         setData(result);
     };
 
@@ -49,18 +61,14 @@ const SeccionRoles = () => {
         setSnackbar({ open: false, message: "", severity: "success" });
     };
 
-    const handleForm = (idRol) => {
-        setIdRol(idRol);
-        setEstado(true);
-    };
-
-    const handleConfirm = (idRol) => {
-        setIdRol(idRol);
+    const handleConfirm = (idAsignatura) => {
+        setIdAsignatura(idAsignatura);
         setEstadoConfirm(true);
     };
 
     useEffect(() => {
         cargarDatos();
+        cargarPeriodos();
     }, []);
 
     const styles = {
@@ -85,18 +93,18 @@ const SeccionRoles = () => {
         }
     }
 
-    return ( 
-        <div className='roles-container'>
+    return (
+        <div className='asignaturas-container'>
             <AppBar
                 sx={styles.appbar}
             >
                 <Typography
                     sx={styles.typography}
-                >Catálogo roles</Typography>
+                >Catálogo asignaturas</Typography>
             </AppBar>
             <div className='info-container'>
                 <Card sx={styles.card}>
-                    <div className='acciones-roles'>
+                    <div className='acciones-asignaturas'>
                         <Controls.SearchInput
                             label="Buscar"
                             onChange={handleChange}
@@ -116,27 +124,28 @@ const SeccionRoles = () => {
                             Agregar
                         </Button>
                     </div>
-                    <div className='grid-roles'>
+                    <div className='grid-asignaturas'>
                         <DefaultDataGrid
                             handleForm={handleForm}
                             handleConfirm={handleConfirm}
                             data={data}
                             columns={Columns}
-                            idField='idRol'
+                            idField='idAsignatura'
                         />
                     </div>
                 </Card>
             </div>
-            <FormularioRoles
+            <FormularioAsignatura
                 estado={estado}
                 setEstado={setEstado}
-                idRol={idRol}
+                idAsignatura={idAsignatura}
+                periodos={peridos}
                 onConfirm={handleSnackbarOpen}
             />
             <Confirmation
                 estado={estadoConfirm}
                 setEstado={setEstadoConfirm}
-                onConfirm={eliminarRol}
+                onConfirm={eliminarAsignatura}
             />
             <Snackbar
                 open={snackbar.open}
@@ -150,8 +159,8 @@ const SeccionRoles = () => {
                         {snackbar.message}
                 </Alert>
             </Snackbar>
-        </div> 
+        </div>
     );
 }
 
-export default SeccionRoles;
+export default SeccionAsignaturas;

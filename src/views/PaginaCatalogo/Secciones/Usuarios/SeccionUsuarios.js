@@ -3,10 +3,11 @@ import { eliminarUsuarios, obtenerUsuarios, filtrarUsuariosxBusqueda } from '../
 import { obtenerRoles } from '../../../../services/roles.service';
 import { AppBar, Button, Typography, Card, InputAdornment, Snackbar, Alert } from '@mui/material';
 import { Search } from '@mui/icons-material';
-import DataGridUsuarios from '../../../../components/DataGrid/Usuarios/DataGridUsuarios';
+import DefaultDataGrid from '../../../../components/DataGrid/DefaultDataGrid';
 import Controls from '../../../../components/Controls/Controls'
 import FormularioUsuario from '../../../../components/Dialog/Forms/FormularioUsuario';
 import Confirmation from '../../../../components/Dialog/Confimation/Confirmation';
+import { Columns } from './UsuariosColumns';
 
 import './SeccionUsuarios.css';
 
@@ -103,7 +104,7 @@ const SeccionUsuarios = () => {
             </AppBar>
             <div className='info-container'>
                 <Card sx={styles.card}>
-                    <div className='acciones'>
+                    <div className='acciones-usuarios'>
                         <Controls.SearchInput
                             label="Buscar"
                             onChange={handleChange}
@@ -123,11 +124,13 @@ const SeccionUsuarios = () => {
                             Agregar
                         </Button>
                     </div>
-                    <div className='grid'>
-                        <DataGridUsuarios
+                    <div className='grid-usuarios'>
+                        <DefaultDataGrid
                             handleForm={handleForm}
                             handleConfirm={handleConfirm}
                             data={data}
+                            columns={Columns}
+                            idField='idUsuario'
                         />
                     </div>
                 </Card>

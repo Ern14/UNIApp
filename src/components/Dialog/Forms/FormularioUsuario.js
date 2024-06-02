@@ -108,6 +108,8 @@ const FormularioUsuario = (props) => {
                                 onChange={setPermiso}
                                 items={permisos}
                                 disabled={user.idUsuario === idUsuario ? true : false}
+                                keyField="idRol" 
+                                valueField="Nombre" 
                             />
                         </div>
                     </div>

@@ -59,11 +59,11 @@ export const menuAcordeon = [
     ,
     {
         text: 'Grupos',
-        path: 'catalogo/docentes'
+        path: 'catalogo/grupos'
     }
     ,
     {
         text: 'Períodos',
-        path: 'catalogo/docentes'
+        path: 'catalogo/periodos'
     }
 ]
