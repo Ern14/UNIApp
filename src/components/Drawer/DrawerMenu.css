@@ -7,8 +7,12 @@
     height: 60px;
 }
 
+.drawer-content {
+    overflow-y: auto;
+    height: 100%;
+}
+
 .menu-usuario{
-    position: absolute;
     bottom: 0;
     padding-bottom: 10px;
     width: 100%;

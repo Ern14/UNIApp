@@ -25,35 +25,19 @@ const DrawerMenu = () => {
     const navigate = useNavigate();
 
     return (
-        <Drawer 
+        <Drawer
             className='drawer'
             variant="permanent"
             anchor="left">
-            <Toolbar>
-                <figure>
-                    <img className='imgLogo' src={logo} alt="UNI"></img>
-                </figure>
-            </Toolbar>
-            <Divider />
-            <List>
-                {menuItems.map(item => (
-                    <ListItem
-                        key={item.text}
-                        disablePadding
-                        onClick={() => navigate(item.path)}>
-                        <ListItemButton>
-                            <ListItemIcon >
-                                {item.icon}
-                            </ListItemIcon>
-                            <ListItemText primary={item.text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-            <Divider />
-            {user && user.idRol === 1 && (
+            <div className="drawer-content">
+                <Toolbar>
+                    <figure>
+                        <img className='imgLogo' src={logo} alt="UNI"></img>
+                    </figure>
+                </Toolbar>
+                <Divider />
                 <List>
-                    {menuCatalogo.map(item => (
+                    {menuItems.map(item => (
                         <ListItem
                             key={item.text}
                             disablePadding
@@ -66,47 +50,65 @@ const DrawerMenu = () => {
                             </ListItemButton>
                         </ListItem>
                     ))}
-                    <Accordion>
-                        <AccordionSummary
-                            expandIcon={<ExpandMore />}
-                        >
-                            <Assignment className='icon-acordeon' />
-                            <Typography className='label-text' component="div">
-                                Catálogos
-                            </Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            {menuAcordeon.map(item => (
-                                <ListItem
-                                    key={item.text}
-                                    disablePadding
-                                    onClick={() => navigate(item.path)}>
-                                    <ListItemButton>
-                                        <ListItemText primary={item.text} />
-                                    </ListItemButton>
-                                </ListItem>
-                            ))}
-                        </AccordionDetails>
-                    </Accordion>
                 </List>
-            )}
-            <div className='menu-usuario'>
                 <Divider />
-                <List>
-                    {menuUsuario.map(item => (
-                        <ListItem
-                            key={item.text}
-                            disablePadding
-                            onClick={() => logout()}>
-                            <ListItemButton>
-                                <ListItemIcon >
-                                    {item.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={item.text} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
+                {user && user.idRol === 1 && (
+                    <List>
+                        {menuCatalogo.map(item => (
+                            <ListItem
+                                key={item.text}
+                                disablePadding
+                                onClick={() => navigate(item.path)}>
+                                <ListItemButton>
+                                    <ListItemIcon >
+                                        {item.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={item.text} />
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
+                        <Accordion>
+                            <AccordionSummary
+                                expandIcon={<ExpandMore />}
+                            >
+                                <Assignment className='icon-acordeon' />
+                                <Typography className='label-text' component="div">
+                                    Catálogos
+                                </Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                {menuAcordeon.map(item => (
+                                    <ListItem
+                                        key={item.text}
+                                        disablePadding
+                                        onClick={() => navigate(item.path)}>
+                                        <ListItemButton>
+                                            <ListItemText primary={item.text} />
+                                        </ListItemButton>
+                                    </ListItem>
+                                ))}
+                            </AccordionDetails>
+                        </Accordion>
+                    </List>
+                )}
+                <div className='menu-usuario'>
+                    <Divider />
+                    <List>
+                        {menuUsuario.map(item => (
+                            <ListItem
+                                key={item.text}
+                                disablePadding
+                                onClick={() => logout()}>
+                                <ListItemButton>
+                                    <ListItemIcon >
+                                        {item.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={item.text} />
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
+                    </List>
+                </div>
             </div>
         </Drawer>
     );

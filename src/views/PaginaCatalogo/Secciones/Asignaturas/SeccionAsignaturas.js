@@ -48,13 +48,13 @@ const SeccionAsignaturas = () => {
     };
 
     const handleSnackbarOpen = (result) => {
-        if (result.statusCode === 200){
+        if (result.statusCode === 200) {
             cargarDatos();
             setSnackbar({ open: true, message: result.datos.mensaje, severity: "success" });
-        }else{
+        } else {
             setSnackbar({ open: true, message: result.datos.mensaje, severity: "warning" });
         }
-    
+
     };
 
     const handleSnackbarClose = () => {
@@ -105,6 +105,13 @@ const SeccionAsignaturas = () => {
             <div className='info-container'>
                 <Card sx={styles.card}>
                     <div className='acciones-asignaturas'>
+                        <Button
+                            sx={styles.button}
+                            variant="contained"
+                            onClick={() => handleForm(null)}
+                        >
+                            Agregar
+                        </Button>
                         <Controls.SearchInput
                             label="Buscar"
                             onChange={handleChange}
@@ -116,13 +123,6 @@ const SeccionAsignaturas = () => {
                                 ),
                             }}
                         />
-                        <Button
-                            sx={styles.button}
-                            variant="contained"
-                            onClick={() => handleForm(null)}
-                        >
-                            Agregar
-                        </Button>
                     </div>
                     <div className='grid-asignaturas'>
                         <DefaultDataGrid
@@ -151,12 +151,12 @@ const SeccionAsignaturas = () => {
                 open={snackbar.open}
                 autoHideDuration={5000}
                 onClose={handleSnackbarClose}
-                >
+            >
                 <Alert
                     severity={snackbar.severity}
                     variant='filled'
-                    >     
-                        {snackbar.message}
+                >
+                    {snackbar.message}
                 </Alert>
             </Snackbar>
         </div>

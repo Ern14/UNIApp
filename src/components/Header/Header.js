@@ -9,7 +9,7 @@ const Header = () => {
         <AppBar sx = {{
             backgroundColor: 'darkblue',
             width: '100%',
-            height: '180px'
+            height: '20vh'
         }}>
             <div className="group">
                 <div className="box">

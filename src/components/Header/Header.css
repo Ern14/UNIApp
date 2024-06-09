@@ -18,17 +18,20 @@
 }
 
 .group .box figure img {
-    width: 160px;
-    height: 100px;
+    width: 120px;
+    height: 80px;
     margin-bottom: 20px;
+    object-fit: contain;
 }
 
 .group .box h1 {
     color: white;
     font-size: 30px;
+    text-align: center;
 }
 
 .group .box h2 {
     font-size: 20px;
     color: white;
+    text-align: center;
 }

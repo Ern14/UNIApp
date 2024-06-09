@@ -11,20 +11,32 @@
     height: 100%;
 }
 
+.card-content{
+    overflow-y: auto;
+    overflow-x: auto;
+    height: 100%;
+    padding: 20px;
+    padding-left: 20px;
+}
+
 .acciones-roles{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 10px;
-    width: 1000px;
+    width: 100%;
+    max-width: 1000px;
     align-items: center;
     padding-top: 20px;
     padding-left: 20px;
+    padding-right: 20px;
 }
 
 .grid-roles{
-    min-height: 500px;
-    width: 1000px;
+    min-height: 100px;
+    width: 100%;
+    max-width: 1000px;
     padding-left: 20px;
+    padding-right: 20px;
 }
 
