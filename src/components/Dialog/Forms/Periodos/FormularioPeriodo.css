@@ -1,0 +1,12 @@
+.periodo-main-container {
+    width: 800px;
+}
+
+.periodo-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.periodo-input-box {
+    padding-top: 20px;
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AppBar, Button, Typography, Card, InputAdornment, Snackbar, Alert } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import { obtenerAsignaturas, eliminarAsignaturas, filtrarAsignaturasxBusqueda } from '../../../../services/asignaturas.service';
-import { obtenerPeridos } from '../../../../services/periodos.service';
+import { obtenerPeriodos } from '../../../../services/periodos.service';
 import DefaultDataGrid from '../../../../components/DataGrid/DefaultDataGrid';
 import FormularioAsignatura from '../../../../components/Dialog/Forms/Asignaturas/FormularioAsignatura';
 import Controls from '../../../../components/Controls/Controls';
@@ -25,7 +25,7 @@ const SeccionAsignaturas = () => {
     };
 
     const cargarPeriodos = async () => {
-        const result = await obtenerPeridos();
+        const result = await obtenerPeriodos();
         setPeriodos(result);
     };
 

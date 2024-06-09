@@ -1,12 +1,12 @@
-.main-container {
+.asignatura-main-container {
     width: 600px;
 }
 
-.form-container {
+.asignatura-form-container {
     display: flex;
     flex-direction: column;
 }
 
-.input-box {
+.asignatura-input-box {
     padding-top: 20px;
 }

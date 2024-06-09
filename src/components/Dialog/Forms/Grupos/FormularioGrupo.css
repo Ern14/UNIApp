@@ -1,0 +1,12 @@
+.grupo-main-container {
+    width: 800px;
+}
+
+.grupo-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.grupo-input-box {
+    padding-top: 20px;
+}

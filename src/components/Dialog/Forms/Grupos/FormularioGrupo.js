@@ -1,37 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { insertarAsignaturas, actualizarAsignaturas, obtenerAsignaturasxId } from '../../../../services/asignaturas.service';
+import { insertarGrupos, actualizarGrupos, obtenerGrupoxId } from '../../../../services/grupos.service';
 import { Dialog, DialogTitle, DialogContent, DialogActions, InputAdornment, Button } from "@mui/material";
-import { Email } from '@mui/icons-material';
+import { Class } from '@mui/icons-material';
 import Controls from '../../../Controls/Controls';
 
-import './FormularioAsignatura.css';
+import './FormularioGrupo.css';
 
-const FormularioAsignatura = (props) => {
-    const { estado, setEstado, idAsignatura, periodos, onConfirm } = props;
+const FormularioGrupo = (props) => {
+    const { estado, setEstado, idGrupo, onConfirm } = props;
 
     const [nombre, setNombre] = useState('');
-    const [periodo, setPeriodo] = useState(1);
-
-    const handleClose = () => {
-        setEstado(false);
-    };
 
     const onSubmit = async () => {
-        const modAsignatura = {
-            idAsignatura,
-            nombre,
-            periodo
+        const modGrupo = {
+            idGrupo,
+            nombre
         }
         let result = null;
-        if(idAsignatura){
-            result = await actualizarAsignaturas(modAsignatura);
-        }else{  
-            result = await insertarAsignaturas(modAsignatura);
+        if (idGrupo) {
+            result = await actualizarGrupos(modGrupo);
+        } else {
+            result = await insertarGrupos(modGrupo);
         }
-        if(result.statusCode === 200){
+        if (result.statusCode === 200) {
             handleClose();
         }
         onConfirm(result);
+    };
+
+    const handleClose = () => {
+        setEstado(false);
     };
 
     const styles = {
@@ -43,28 +41,27 @@ const FormularioAsignatura = (props) => {
 
     useEffect(() => {
         const cargarDatos = async () => {
-            const result = await obtenerAsignaturasxId(idAsignatura);
+            const result = await obtenerGrupoxId(idGrupo);
             setNombre(result.datos[0].Nombre);
-            setPeriodo(result.datos[0].idPeriodo);
         };
-        if (idAsignatura) {
+        if (idGrupo) {
             cargarDatos();
         };
-    }, [idAsignatura]);
+    }, [idGrupo]);
 
-    return (
-        <div className='asignatura-main-container'>
+    return ( 
+        <div className='grupo-main-container'>
             <Dialog
                 open={estado}
             >
                 <DialogTitle
                     sx={styles.title}
                 >
-                    {idAsignatura ? "Editar asignatura" : "Agregar asignatura"}
+                    {idGrupo ? "Editar grupo" : "Agregar grupo"}
                 </DialogTitle>
                 <DialogContent>
-                    <div className='asignatura-form-container'>
-                        <div className='asignatura-input-box'>
+                    <div className='grupo-form-container'>
+                        <div className='grupo-input-box'>
                             <Controls.TextInput
                                 label="Nombre"
                                 value={nombre}
@@ -72,20 +69,10 @@ const FormularioAsignatura = (props) => {
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <Email />
+                                            <Class />
                                         </InputAdornment>
                                     ),
                                 }}
-                            />
-                        </div>
-                        <div className='input-box'>
-                            <Controls.SelectInput
-                                label="Periodo"
-                                value={periodo}
-                                onChange={setPeriodo}
-                                items={periodos}
-                                keyField="idPeriodo" 
-                                valueField="Nombre" 
                             />
                         </div>
                     </div>
@@ -95,8 +82,8 @@ const FormularioAsignatura = (props) => {
                     <Button onClick={onSubmit}>Guardar</Button>
                 </DialogActions>
             </Dialog>
-        </div> 
+        </div>
     );
 }
  
-export default FormularioAsignatura;
+export default FormularioGrupo;

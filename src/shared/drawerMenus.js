@@ -44,24 +44,17 @@ export const menuAcordeon = [
         path: 'catalogo/asignaturas'
     },
     {
-        text: 'Asistencias',
-        path: 'catalogo/asistencias'
-    },
-    {
         text: 'Departamentos',
         path: 'catalogo/departamentos'
-    }
-    ,
+    },
     {
         text: 'Docentes',
         path: 'catalogo/docentes'
-    }
-    ,
+    },
     {
         text: 'Grupos',
         path: 'catalogo/grupos'
-    }
-    ,
+    },
     {
         text: 'Períodos',
         path: 'catalogo/periodos'

@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Button, Typography, Card, InputAdornment, Snackbar, Alert } from '@mui/material';
 import { Search } from '@mui/icons-material';
-import { obtenerRoles, filtrarRolesxBusqueda, eliminarRoles } from '../../../../services/roles.service';
+import { eliminarGrupos, filtrarGruposxBusqueda, obtenerGrupos } from '../../../../services/grupos.service';
 import DefaultDataGrid from '../../../../components/DataGrid/DefaultDataGrid';
-import FormularioRoles from '../../../../components/Dialog/Forms/Roles/FormularioRoles';
+import FormularioGrupo from '../../../../components/Dialog/Forms/Grupos/FormularioGrupo';
 import Controls from '../../../../components/Controls/Controls';
 import Confirmation from '../../../../components/Dialog/Confimation/Confirmation';
-import { Columns } from './RolesColumns';
+import { Columns } from './GruposColumns';
 
-import './SeccionRoles.css';
+import './SeccionGrupos.css';
 
-const SeccionRoles = () => {
+const SeccionGrupos = () => {
     const [data, setData] = useState([]);
     const [estado, setEstado] = useState(false);
     const [estadoConfirm, setEstadoConfirm] = useState(false);
-    const [idRol, setIdRol] = useState(null);
+    const [idGrupo, setIdGrupo] = useState(null);
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
 
     const cargarDatos = async () => {
-        const data = await obtenerRoles();
+        const data = await obtenerGrupos();
         setData(data);
     };
 
-    const eliminarRol = async () => {
-        const data = await eliminarRoles(idRol);
+    const eliminarGrupo = async () => {
+        const data = await eliminarGrupos(idGrupo);
         handleSnackbarOpen(data);
         if (data.status === "Exito") {
             cargarDatos();
@@ -31,7 +31,7 @@ const SeccionRoles = () => {
     };
 
     const handleChange = async (e) => {
-        const result = await filtrarRolesxBusqueda(e.target.value);
+        const result = await filtrarGruposxBusqueda(e.target.value);
         setData(result);
     };
 
@@ -49,13 +49,13 @@ const SeccionRoles = () => {
         setSnackbar({ open: false, message: "", severity: "success" });
     };
 
-    const handleForm = (idRol) => {
-        setIdRol(idRol);
+    const handleForm = (idGrupo) => {
+        setIdGrupo(idGrupo);
         setEstado(true);
     };
 
-    const handleConfirm = (idRol) => {
-        setIdRol(idRol);
+    const handleConfirm = (idGrupo) => {
+        setIdGrupo(idGrupo);
         setEstadoConfirm(true);
     };
 
@@ -85,19 +85,19 @@ const SeccionRoles = () => {
         }
     };
 
-    return (
-        <div className='roles-container'>
+    return ( 
+        <div className='grupo-container'>
             <AppBar
                 sx={styles.appbar}
             >
                 <Typography
                     sx={styles.typography}
-                >Catálogo roles</Typography>
+                >Catálogo peridos</Typography>
             </AppBar>
             <div className='info-container'>
-                <Card sx={styles.card}>
-                    <div className='roles-card-content'>
-                        <div className='acciones-roles'>
+            <Card sx={styles.card}>
+                    <div className='grupo-card-content'>
+                        <div className='acciones-grupo'>
                             <Button
                                 sx={styles.button}
                                 variant="contained"
@@ -117,28 +117,28 @@ const SeccionRoles = () => {
                                 }}
                             />
                         </div>
-                        <div className='grid-roles'>
+                        <div className='grid-grupo'>
                             <DefaultDataGrid
                                 handleForm={handleForm}
                                 handleConfirm={handleConfirm}
                                 data={data}
                                 columns={Columns}
-                                idField='idRol'
+                                idField='idGrupo'
                             />
                         </div>
                     </div>
                 </Card>
             </div>
-            <FormularioRoles
+            <FormularioGrupo
                 estado={estado}
                 setEstado={setEstado}
-                idRol={idRol}
+                idGrupo={idGrupo}
                 onConfirm={handleSnackbarOpen}
             />
             <Confirmation
                 estado={estadoConfirm}
                 setEstado={setEstadoConfirm}
-                onConfirm={eliminarRol}
+                onConfirm={eliminarGrupo}
             />
             <Snackbar
                 open={snackbar.open}
@@ -155,5 +155,5 @@ const SeccionRoles = () => {
         </div>
     );
 }
-
-export default SeccionRoles;
+ 
+export default SeccionGrupos;
