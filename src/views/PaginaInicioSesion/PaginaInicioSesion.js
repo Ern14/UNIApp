@@ -34,7 +34,7 @@ const PaginaInicioSesion = () => {
   },[isAuthenticated, navigate]);
 
   return (
-    <div className='container'>
+    <div className='login-container'>
       <Header />
       <LoginCard isAuthenticated={isAuthenticated}
         onConfirm={handleSnackbarOpen} 
