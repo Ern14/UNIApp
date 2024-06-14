@@ -1,0 +1,12 @@
+.departamento-main-container {
+    width: 800px;
+}
+
+.departamento-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.departamento-input-box {
+    padding-top: 20px;
+}
