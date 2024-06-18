@@ -78,15 +78,6 @@ const LoginCard = ({ isAuthenticated, onConfirm }) => {
                     </Button>
                 </div>
             </form>
-            <div className="registroContainer">
-                <label className='registro'>
-                    O cree un nuevo usuario
-                </label>
-                <Button
-                    color="secondary">
-                    Registrarse
-                </Button>
-            </div>
         </div>
     );
 };

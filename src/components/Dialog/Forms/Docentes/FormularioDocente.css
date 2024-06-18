@@ -1,0 +1,12 @@
+.docentes-main-container {
+    width: 800px;
+}
+
+.docentes-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.docentes-input-box {
+    padding-top: 20px;
+}
