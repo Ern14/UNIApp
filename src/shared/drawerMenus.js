@@ -44,7 +44,7 @@ export const menuAcordeon = [
         path: 'catalogo/asignaturas'
     },
     {
-        text: 'Departamentos',
+        text: 'Área de conocimiento',
         path: 'catalogo/departamentos'
     },
     {

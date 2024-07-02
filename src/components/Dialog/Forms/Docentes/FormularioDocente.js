@@ -66,7 +66,7 @@ const FormularioDocente = (props) => {
                     <div className='docentes-form-container'>
                         <div className='docentes-input-box'>
                             <Controls.TextInput
-                                label="Nombre"
+                                label="Nombres"
                                 value={nombre}
                                 onChange={(e) => setNombre(e.target.value)}
                                 InputProps={{
@@ -80,7 +80,7 @@ const FormularioDocente = (props) => {
                         </div>
                         <div className='docentes-input-box'>
                             <Controls.TextInput
-                                label="Apellido"
+                                label="Apellidos"
                                 value={apellido}
                                 onChange={(e) => setApellido(e.target.value)}
                                 InputProps={{

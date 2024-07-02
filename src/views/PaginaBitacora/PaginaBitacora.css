@@ -1,3 +1,63 @@
-.container{
-    display: flex;
+.bitacora-container{
+    position: relative;
+    background-color: white;
+    flex-direction: column;
+    width: 100%;
 }
+
+.info-bitacora{
+    flex-direction: column;
+    padding-top: 70px;
+    height: 100%;
+}
+
+.bitacora-card-content{
+    overflow-y: auto;
+    overflow-x: auto;
+    height: 100%;
+    padding: 20px;
+    padding-left: 20px;
+}
+
+.top-bitacora{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 80%;
+    align-items: center;
+}
+
+
+.filtros-bitacora{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 800px;
+    align-items: center;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.confirmar-bitacora{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 200px;
+    align-items: end;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.grid-bitacora{
+    min-height: 100px;
+    width: 100%;
+    max-width: 800px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+

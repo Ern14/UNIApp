@@ -57,7 +57,7 @@ const FormularioDepartamento = ( props ) => {
                 <DialogTitle
                     sx={styles.title}
                 >
-                    {idDepartamento ? "Editar departamento" : "Agregar departamento"}
+                    {idDepartamento ? "Editar área de conocimiento" : "Agregar área de conocimiento"}
                 </DialogTitle>
                 <DialogContent>
                     <div className='departamento-form-container'>

@@ -93,7 +93,7 @@ const SeccionDepartamentos = () => {
             >
                 <Typography
                     sx={styles.typography}
-                >Catálogo departamentos</Typography>
+                >Catálogo área de conocimiento</Typography>
             </AppBar>
             <div className='info-container'>
             <Card sx={styles.card}>
