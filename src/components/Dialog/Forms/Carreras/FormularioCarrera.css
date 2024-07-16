@@ -1,0 +1,12 @@
+.carrera-main-container {
+    width: 900px;
+}
+
+.carrera-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.carrera-input-box {
+    padding-top: 20px;
+}

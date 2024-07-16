@@ -48,6 +48,10 @@ export const menuAcordeon = [
         path: 'catalogo/departamentos'
     },
     {
+        text: 'Carerras',
+        path: 'catalogo/carreras'
+    },
+    {
         text: 'Docentes',
         path: 'catalogo/docentes'
     },

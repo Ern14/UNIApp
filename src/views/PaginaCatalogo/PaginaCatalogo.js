@@ -6,6 +6,7 @@ import SeccionPeriodos from './Secciones/Periodos/SeccionPeriodos';
 import SeccionGrupos from './Secciones/Grupos/SeccionGrupos';
 import SeccionDepartamentos from './Secciones/Departamentos/SeccionDepartamentos';
 import SeccionDocentes from './Secciones/Docentes/SeccionDocentes';
+import SeccionCarreras from './Secciones/Carreras/SeccionCarreras';
 import { Routes, Route } from 'react-router-dom';
 
 import './PaginaCatalogo.css';
@@ -21,6 +22,7 @@ const PaginaCatalogo = () => {
                 <Route path="grupos" element={<SeccionGrupos />} />
                 <Route path="departamentos" element={<SeccionDepartamentos />} />
                 <Route path="docentes" element={<SeccionDocentes />} />
+                <Route path="carreras" element={<SeccionCarreras />} />
             </Routes>
         </div>
     );
