@@ -37,11 +37,12 @@ export const filtrarCarrerasxBusqueda = async (busqueda) => {
 export const insertarCarreras = async (modCarrera) => {
     try {
         const body = {
-            IdDepartamento: modCarrera.idDepartamento,
+            idDepartamento: modCarrera.departamento,
             Nombre: modCarrera.nombre,
             Abreviatura: modCarrera.abreviatura,
             Descripcion: modCarrera.descripcion
         };
+        console.log(body)
         const response = await axios.post(`${enviroment.localhost}/carreras/insertarCarrera`, body);
         return response.data;
     } catch (error) {
@@ -53,8 +54,8 @@ export const insertarCarreras = async (modCarrera) => {
 export const actualizarCarreras = async (modCarrera) => {
     try {
         const body = {
-            IdCarrera: modCarrera.idCarrera,
-            IdDepartamento: modCarrera.IdDepartamento,
+            idCarrera: modCarrera.idCarrera,
+            idDepartamento: modCarrera.departamento,
             Nombre: modCarrera.nombre,
             Abreviatura: modCarrera.abreviatura,
             Descripcion: modCarrera.descripcion
@@ -70,7 +71,7 @@ export const actualizarCarreras = async (modCarrera) => {
 export const eliminarCarreras = async (idCarrera) => {
     try {
         const data = {
-            IdCarrera: idCarrera,
+            idCarrera: idCarrera,
         };
         const response = await axios.delete(`${enviroment.localhost}/carreras/eliminarCarrera`, { data });
         return response.data;

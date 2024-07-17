@@ -7,10 +7,10 @@ import Controls from '../../../Controls/Controls';
 import './FormularioAsignatura.css';
 
 const FormularioAsignatura = (props) => {
-    const { estado, setEstado, idAsignatura, periodos, onConfirm } = props;
+    const { estado, setEstado, idAsignatura, onConfirm } = props;
 
     const [nombre, setNombre] = useState('');
-    const [periodo, setPeriodo] = useState(1);
+    const [descripcion, setDescripcion] = useState('');
 
     const handleClose = () => {
         setEstado(false);
@@ -20,7 +20,7 @@ const FormularioAsignatura = (props) => {
         const modAsignatura = {
             idAsignatura,
             nombre,
-            periodo
+            descripcion
         }
         let result = null;
         if(idAsignatura){
@@ -45,7 +45,7 @@ const FormularioAsignatura = (props) => {
         const cargarDatos = async () => {
             const result = await obtenerAsignaturasxId(idAsignatura);
             setNombre(result.datos[0].Nombre);
-            setPeriodo(result.datos[0].idPeriodo);
+            setDescripcion(result.datos[0].Descripcion);
         };
         if (idAsignatura) {
             cargarDatos();
@@ -78,14 +78,18 @@ const FormularioAsignatura = (props) => {
                                 }}
                             />
                         </div>
-                        <div className='input-box'>
-                            <Controls.SelectInput
-                                label="Periodo"
-                                value={periodo}
-                                onChange={setPeriodo}
-                                items={periodos}
-                                keyField="idPeriodo" 
-                                valueField="Nombre" 
+                        <div className='asignatura-input-box'>
+                            <Controls.TextInput
+                                label="Descripción"
+                                value={descripcion}
+                                onChange={(e) => setDescripcion(e.target.value)}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Email />
+                                        </InputAdornment>
+                                    ),
+                                }}
                             />
                         </div>
                     </div>

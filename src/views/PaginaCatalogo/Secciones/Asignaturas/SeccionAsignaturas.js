@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { AppBar, Button, Typography, Card, InputAdornment, Snackbar, Alert } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import { obtenerAsignaturas, eliminarAsignaturas, filtrarAsignaturasxBusqueda } from '../../../../services/asignaturas.service';
-import { obtenerPeriodos } from '../../../../services/periodos.service';
 import DefaultDataGrid from '../../../../components/DataGrid/DefaultDataGrid';
 import FormularioAsignatura from '../../../../components/Dialog/Forms/Asignaturas/FormularioAsignatura';
 import Controls from '../../../../components/Controls/Controls';
@@ -13,7 +12,6 @@ import './SeccionAsignaturas.css';
 
 const SeccionAsignaturas = () => {
     const [data, setData] = useState([]);
-    const [peridos, setPeriodos] = useState([]);
     const [estado, setEstado] = useState(false);
     const [estadoConfirm, setEstadoConfirm] = useState(false);
     const [idAsignatura, setIdAsignatura] = useState(null);
@@ -22,11 +20,6 @@ const SeccionAsignaturas = () => {
     const cargarDatos = async () => {
         const data = await obtenerAsignaturas();
         setData(data);
-    };
-
-    const cargarPeriodos = async () => {
-        const result = await obtenerPeriodos();
-        setPeriodos(result);
     };
 
     const eliminarAsignatura = async () => {
@@ -68,7 +61,6 @@ const SeccionAsignaturas = () => {
 
     useEffect(() => {
         cargarDatos();
-        cargarPeriodos();
     }, []);
 
     const styles = {
@@ -139,7 +131,6 @@ const SeccionAsignaturas = () => {
                 estado={estado}
                 setEstado={setEstado}
                 idAsignatura={idAsignatura}
-                periodos={peridos}
                 onConfirm={handleSnackbarOpen}
             />
             <Confirmation

@@ -37,8 +37,8 @@ export const filtrarAsignaturasxBusqueda = async (busqueda) => {
 export const insertarAsignaturas = async (modAsignatura) => {
     try {
         const body = {
-            idPeriodo: modAsignatura.periodo,
-            Nombre: modAsignatura.nombre
+            Nombre: modAsignatura.nombre,
+            Descripcion: modAsignatura.descripcion
         };
         const response = await axios.post(`${enviroment.localhost}/asignaturas/insertarAsignatura`, body);
         return response.data;
@@ -52,8 +52,8 @@ export const actualizarAsignaturas = async (modAsignatura) => {
     try {
         const body = {
             IdAsignatura: modAsignatura.idAsignatura,
-            IdPeriodo: modAsignatura.periodo,
-            Nombre: modAsignatura.nombre
+            Nombre: modAsignatura.nombre,
+            Descripcion: modAsignatura.descripcion
         };
         const response = await axios.put(`${enviroment.localhost}/asignaturas/actualizarAsignatura`, body);
         return response.data;
