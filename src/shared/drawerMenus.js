@@ -1,4 +1,4 @@
-import { Home, Book, BarChart, Person, Logout, Badge } from '@mui/icons-material';
+import { Home, Book, Person, Logout, Badge } from '@mui/icons-material';
 
 export const menuItems = [
     {
@@ -10,11 +10,6 @@ export const menuItems = [
         text: 'Bitácora',
         icon: <Book />,
         path: '/bitacora'
-    },
-    {
-        text: 'Informe gráfico',
-        icon: <BarChart />,
-        path: '/informe'
     }
 ]
 
