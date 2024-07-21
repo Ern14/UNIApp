@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { AppBar, Button, Typography, Card, InputAdornment, Snackbar, Alert } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import { eliminarGrupos, filtrarGruposxBusqueda, obtenerGrupos } from '../../../../services/grupos.service';
+import { obtenerCarreras } from '../../../../services/carreras.service';
+import { obtenerPeriodos } from '../../../../services/periodos.service';
 import DefaultDataGrid from '../../../../components/DataGrid/DefaultDataGrid';
 import FormularioGrupo from '../../../../components/Dialog/Forms/Grupos/FormularioGrupo';
 import Controls from '../../../../components/Controls/Controls';
@@ -12,6 +14,8 @@ import './SeccionGrupos.css';
 
 const SeccionGrupos = () => {
     const [data, setData] = useState([]);
+    const [periodos, setPeriodos] = useState([]);
+    const [carreras, setCarreras] = useState([]);
     const [estado, setEstado] = useState(false);
     const [estadoConfirm, setEstadoConfirm] = useState(false);
     const [idGrupo, setIdGrupo] = useState(null);
@@ -20,6 +24,16 @@ const SeccionGrupos = () => {
     const cargarDatos = async () => {
         const data = await obtenerGrupos();
         setData(data);
+    };
+
+    const cargarPeriodos = async () => {
+        const result = await obtenerPeriodos();
+        setPeriodos(result);
+    };
+
+    const cargarCarreras = async () => {
+        const result = await obtenerCarreras();
+        setCarreras(result);
     };
 
     const eliminarGrupo = async () => {
@@ -61,6 +75,8 @@ const SeccionGrupos = () => {
 
     useEffect(() => {
         cargarDatos();
+        cargarPeriodos();
+        cargarCarreras();
     }, []);
 
     const styles = {
@@ -92,7 +108,7 @@ const SeccionGrupos = () => {
             >
                 <Typography
                     sx={styles.typography}
-                >Catálogo peridos</Typography>
+                >Catálogo grupos</Typography>
             </AppBar>
             <div className='info-container'>
             <Card sx={styles.card}>
@@ -133,6 +149,8 @@ const SeccionGrupos = () => {
                 estado={estado}
                 setEstado={setEstado}
                 idGrupo={idGrupo}
+                periodos={periodos}
+                carreras={carreras}
                 onConfirm={handleSnackbarOpen}
             />
             <Confirmation

@@ -42,7 +42,6 @@ export const insertarCarreras = async (modCarrera) => {
             Abreviatura: modCarrera.abreviatura,
             Descripcion: modCarrera.descripcion
         };
-        console.log(body)
         const response = await axios.post(`${enviroment.localhost}/carreras/insertarCarrera`, body);
         return response.data;
     } catch (error) {

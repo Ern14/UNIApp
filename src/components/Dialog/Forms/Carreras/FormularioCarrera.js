@@ -27,7 +27,6 @@ const FormularioCarrera = (props) => {
             descripcion,
             abreviatura
         }
-        console.log(idCarrera)
         let result = null;
         if(idCarrera){
             result = await actualizarCarreras(modCarrera);

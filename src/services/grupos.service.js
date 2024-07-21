@@ -34,10 +34,12 @@ export const filtrarGruposxBusqueda = async (busqueda) => {
 
 };
 
-export const insertarGrupos = async (modPeriodo) => {
+export const insertarGrupos = async (modGrupo) => {
     try {
         const body = {
-            Nombre: modPeriodo.nombre
+            idPeriodo: modGrupo.periodo,
+            idCarrera: modGrupo.carrera,
+            Nombre: modGrupo.nombre
         };
         const response = await axios.post(`${enviroment.localhost}/grupos/insertarGrupo`, body);
         return response.data;
@@ -51,6 +53,8 @@ export const actualizarGrupos = async (modGrupo) => {
     try {
         const body = {
             IdGrupo: modGrupo.idGrupo,
+            IdPeriodo: modGrupo.periodo,
+            IdCarrera: modGrupo.carrera,
             Nombre: modGrupo.nombre,
         };
         const response = await axios.put(`${enviroment.localhost}/grupos/actualizarGrupo`, body);
