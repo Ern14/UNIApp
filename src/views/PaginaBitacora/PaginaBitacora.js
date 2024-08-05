@@ -1,85 +1,73 @@
-import React, { useState } from 'react';
-import { AppBar, Typography, Card, Snackbar, Alert, Button } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { AppBar, Typography, Card, Button } from '@mui/material';
 import Controls from '../../components/Controls/Controls';
+import Confirmation from '../../../src/components/Dialog/Confimation/Confirmation';
 import AsistenciaDataGrid from '../../components/DataGrid/AsistenciaDataGrid';
+import { obtenerPeriodos } from '../../services/periodos.service';
+import { obtenerDepartamentos } from '../../services/departamentos.service';
 import { Columns } from './BitacoraColumns';
 
 import './PaginaBitacora.css';
 
 const PaginaBitacora = () => {
     const [areaConocimiento, setAreaConocimiento] = useState(1);
+    const [areasConocimiento, setAreasConocimiento] = useState([]);
+    const [periodos, setPeriodos] = useState([]);
     const [periodo, setPeriodo] = useState(1);
+    const [estadoConfirm, setEstadoConfirm] = useState(false);
 
-    const areasConocimiento = [
-        {
-            idDepartamento: 1,
-            Nombre: 'Agroindustrial y Química'
-        },
-        {
-            idDepartamento: 2,
-            Nombre: 'Ingeniería, construcción y afines'
-        },
-        {
-            idDepartamento: 3,
-            Nombre: 'Tecnología de la información y comunicación'
-        }
-    ]
+    const cargarDatos = async () => {
+        const pe = await obtenerPeriodos();
+        setPeriodos(pe);
+        const dep = await obtenerDepartamentos();
+        setAreasConocimiento(dep);
+    };
 
-    const periodos = [
-        {
-            idDireccion: 1,
-            Nombre: 'M1'
-        },
-        {
-            idDireccion: 2,
-            Nombre: 'M2'
-        },
-        {
-            idDireccion: 3,
-            Nombre: 'M3'
-        },
-        {
-            idDireccion: 4,
-            Nombre: 'T1'
-        },
-        {
-            idDireccion: 5,
-            Nombre: 'T2'
-        },
-        {
-            idDireccion: 6,
-            Nombre: 'T3'
-        },
-        {
-            idDireccion: 7,
-            Nombre: 'N1'
-        },
-        {
-            idDireccion: 8,
-            Nombre: 'N2'
-        },
-    ]
+    const handleConfirm = () => {
+        setEstadoConfirm(true);
+    };
+
+    const confirmarAsistencia = async () => {
+
+    };
+
+    useEffect(() => {
+        cargarDatos();
+    }, []);
 
     const data = [
         {
             idDepartamento: 1,
-            AreaConocimiento: 'Agrícola y Química',
+            AreaConocimiento: 'Agrícola',
             Carrera: 'Ingeniería Química',
             Docente: 'Ernesto Molina',
             Asignatura: 'Matemáticas II',
-            Grupo: '2T3-QUI',
+            Grupo: '2T2-QUI',
             Dia: '23/06/2024',
             Periodo: '2T',
+            Asistencia: false,
         },
         {
             idDepartamento: 2,
-            AreaConocimiento: 'Agrícola y Química',
+            AreaConocimiento: 'Agrícola',
             Carrera: 'Ingeniería Agrícola',
             Docente: 'Richard Arauz',
-            Asignatura: 'Matemáticas III',
-            Grupo: '3T2-A',
+            Asignatura: 'Matemáticas II',
+            Grupo: '2T3-A',
             Dia: '23/06/2024',
-            Periodo: '3T',
+            Periodo: '2T',
+            Asistencia: false,
+        },
+        {
+            idDepartamento: 3,
+            AreaConocimiento: 'Agrícola',
+            Carrera: 'Ingeniería Agrícola',
+            Docente: 'prueba',
+            Asignatura: 'Matemáticas II',
+            Grupo: '2T2-A',
+            Dia: '23/06/2024',
+            Periodo: '2T',
+            Asistencia: false,
         },
     ]
 
@@ -133,7 +121,7 @@ const PaginaBitacora = () => {
                                     value={periodo}
                                     onChange={setPeriodo}
                                     items={periodos}
-                                    keyField="idDireccion"
+                                    keyField="idPeriodo"
                                     valueField="Nombre"
                                 />
                             </div>
@@ -141,7 +129,7 @@ const PaginaBitacora = () => {
                                 <Button
                                     sx={styles.button}
                                     variant="contained"
-                                    onClick={() => console.log("confirmar")}
+                                    onClick={() => handleConfirm()}
                                 >
                                     Confirmar
                                 </Button>
@@ -158,6 +146,11 @@ const PaginaBitacora = () => {
 
                 </Card>
             </div>
+            <Confirmation
+                estado={estadoConfirm}
+                setEstado={setEstadoConfirm}
+                onConfirm={confirmarAsistencia}
+            />
         </div>
     );
 };

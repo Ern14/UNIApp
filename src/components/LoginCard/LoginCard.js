@@ -49,7 +49,7 @@ const LoginCard = ({ isAuthenticated, onConfirm }) => {
                             <TextField
                                 className='input'
                                 name='Correo'
-                                label="Correo"
+                                label="Usuario"
                                 variant="standard"
                                 value={body.correo}
                                 onChange={inputChange}

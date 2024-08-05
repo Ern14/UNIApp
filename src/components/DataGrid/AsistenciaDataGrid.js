@@ -7,9 +7,12 @@ const AsistenciaDataGrid = (props) => {
   const [rows, setRows] = useState(data);
 
   const handleCheckboxChange = (rowId) => {
-    setRows(rows.map(row => 
-      row.id === rowId ? { ...row, asistencia: !row.asistencia } : row
-    ));
+    console.log(rowId)
+    setRows(prevRows =>
+      prevRows.map(row =>
+        row[idField] === rowId ? { ...row, Asistencia: !row.Asistencia } : row
+      )
+    );
   };
 
   const defaultColumns = [
@@ -18,10 +21,10 @@ const AsistenciaDataGrid = (props) => {
         headerName: 'Asistencia',
         width: 150,
         renderCell: (params) => (
-          <Checkbox 
-            checked={params.row.asistencia || false} 
-            onChange={() => handleCheckboxChange(params.row.id)} 
-          />
+          <Checkbox
+          checked={params.row.Asistencia}
+          onChange={() => handleCheckboxChange(params.row[idField])}
+        />
         ),
       },
     ...columns,

@@ -73,7 +73,7 @@ const FormularioUsuario = (props) => {
                     <div className='form-container'>
                         <div className='input-box'>
                             <Controls.TextInput
-                                label="Correo"
+                                label="Usuario"
                                 value={correo}
                                 onChange={(e) => setCorreo(e.target.value)}
                                 InputProps={{
