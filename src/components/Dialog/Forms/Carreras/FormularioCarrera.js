@@ -115,7 +115,7 @@ const FormularioCarrera = (props) => {
                         </div>
                         <div className='input-box'>
                             <Controls.SelectInput
-                                label="Departamento"
+                                label="Área de conocimiento"
                                 value={departamento}
                                 onChange={setDepartamento}
                                 items={departamentos}
