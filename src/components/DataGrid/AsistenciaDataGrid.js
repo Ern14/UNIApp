@@ -7,7 +7,6 @@ const AsistenciaDataGrid = (props) => {
   const [rows, setRows] = useState(data);
 
   const handleCheckboxChange = (rowId) => {
-    console.log(rowId)
     setRows(prevRows =>
       prevRows.map(row =>
         row[idField] === rowId ? { ...row, Asistencia: !row.Asistencia } : row

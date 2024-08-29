@@ -1,0 +1,12 @@
+.docente-departamento-main-container {
+    width: 800px;
+}
+
+.docente-departamento-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.docente-departamento-input-box {
+    padding-top: 20px;
+}

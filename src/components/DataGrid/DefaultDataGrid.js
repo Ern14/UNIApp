@@ -4,7 +4,7 @@ import { IconButton, Tooltip } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 
 const DefaultDataGrid = (props) => {
-  const {handleForm, handleConfirm, data, columns, idField } = props;
+  const {handleForm, handleConfirm, data, columns, idField, additionalActions } = props;
 
   const handleConfirmLocal = (Id) => {
     handleConfirm(Id);
@@ -22,6 +22,9 @@ const DefaultDataGrid = (props) => {
       width: 150,
       renderCell: (params) => (
         <div>
+          {additionalActions && additionalActions.map((ActionComponent, index) => (
+            <ActionComponent key={index} params={params} />
+          ))}
           <Tooltip title = "Editar">
             <IconButton variant="contained" color="primary" onClick={() => handleFormLocal(params.row[idField])}>
               <Edit />

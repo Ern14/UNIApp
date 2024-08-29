@@ -6,7 +6,10 @@ import DefaultDataGrid from '../../../../components/DataGrid/DefaultDataGrid';
 import FormularioDocente from '../../../../components/Dialog/Forms/Docentes/FormularioDocente';
 import Controls from '../../../../components/Controls/Controls';
 import Confirmation from '../../../../components/Dialog/Confimation/Confirmation';
+import SeccionDocenteDepartamento from '../DocenteDepartamento/SeccionDocenteDepartamento';
 import { Columns } from './DocentesColumns';
+import { Tooltip, IconButton } from '@mui/material';
+import { Assignment } from '@mui/icons-material';
 
 import './SeccionDocentes.css';
 
@@ -16,6 +19,7 @@ const SeccionDocentes = () => {
     const [estadoConfirm, setEstadoConfirm] = useState(false);
     const [idDocente, setIdDocente] = useState(null);
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+    const [showSeccionDocenteDepartamento, setShowSeccionDocenteDepartamento] = useState(false);
 
     const cargarDatos = async () => {
         const data = await obtenerDocentes();
@@ -34,6 +38,11 @@ const SeccionDocentes = () => {
         const result = await filtrarDocentesxBusqueda(e.target.value);
         setData(result);
     };
+
+    const handleAsociar = (id) => {
+        setIdDocente(id);
+        setShowSeccionDocenteDepartamento(true);
+      };
 
     const handleSnackbarOpen = (result) => {
         if (result.statusCode === 200) {
@@ -57,6 +66,11 @@ const SeccionDocentes = () => {
     const handleConfirm = (idDocente) => {
         setIdDocente(idDocente);
         setEstadoConfirm(true);
+    };
+
+    const handleVolver = () => {
+        setShowSeccionDocenteDepartamento(false);
+        setIdDocente(null);
     };
 
     useEffect(() => {
@@ -87,71 +101,80 @@ const SeccionDocentes = () => {
 
     return ( 
         <div className='docentes-container'>
-            <AppBar
-                sx={styles.appbar}
-            >
-                <Typography
-                    sx={styles.typography}
-                >Catálogo docentes</Typography>
-            </AppBar>
-            <div className='info-container'>
-            <Card sx={styles.card}>
-                    <div className='docentes-card-content'>
-                        <div className='acciones-docentes'>
-                            <Button
-                                sx={styles.button}
-                                variant="contained"
-                                onClick={() => handleForm(null)}
-                            >
-                                Agregar
-                            </Button>
-                            <Controls.SearchInput
-                                label="Buscar"
-                                onChange={handleChange}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <Search />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </div>
-                        <div className='grid-docentes'>
-                            <DefaultDataGrid
-                                handleForm={handleForm}
-                                handleConfirm={handleConfirm}
-                                data={data}
-                                columns={Columns}
-                                idField='idDocente'
-                            />
-                        </div>
+            {showSeccionDocenteDepartamento ? (
+                <SeccionDocenteDepartamento idDocente={idDocente} />
+            ) : (
+                <>
+                    <AppBar sx={styles.appbar}>
+                        <Typography sx={styles.typography}>Catálogo docentes</Typography>
+                    </AppBar>
+                    <div className='info-container'>
+                        <Card sx={styles.card}>
+                            <div className='docentes-card-content'>
+                                <div className='acciones-docentes'>
+                                    <Button
+                                        sx={styles.button}
+                                        variant="contained"
+                                        onClick={() => handleForm(null)}
+                                    >
+                                        Agregar
+                                    </Button>
+                                    <Controls.SearchInput
+                                        label="Buscar"
+                                        onChange={handleChange}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <Search />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </div>
+                                <div className='grid-docentes'>
+                                    <DefaultDataGrid
+                                        handleForm={handleForm}
+                                        handleConfirm={handleConfirm}
+                                        data={data}
+                                        columns={Columns}
+                                        idField='idDocente'
+                                        additionalActions={[({ params }) => (
+                                            <Tooltip title="Asociar">
+                                                <IconButton variant="contained" color="default" onClick={() => handleAsociar(params.row.idDocente)}>
+                                                    <Assignment />
+                                                </IconButton>
+                                            </Tooltip>
+                                        )]}
+                                    />
+                                </div>
+                            </div>
+                        </Card>
                     </div>
-                </Card>
-            </div>
-            <FormularioDocente
-                estado={estado}
-                setEstado={setEstado}
-                idDocente={idDocente}
-                onConfirm={handleSnackbarOpen}
-            />
-            <Confirmation
-                estado={estadoConfirm}
-                setEstado={setEstadoConfirm}
-                onConfirm={eliminarDocente}
-            />
-            <Snackbar
-                open={snackbar.open}
-                autoHideDuration={5000}
-                onClose={handleSnackbarClose}
-            >
-                <Alert
-                    severity={snackbar.severity}
-                    variant='filled'
-                >
-                    {snackbar.message}
-                </Alert>
-            </Snackbar>
+                    <FormularioDocente
+                        estado={estado}
+                        setEstado={setEstado}
+                        idDocente={idDocente}
+                        onConfirm={handleSnackbarOpen}
+                    />
+                    <Confirmation
+                        estado={estadoConfirm}
+                        setEstado={setEstadoConfirm}
+                        onConfirm={eliminarDocente}
+                    />
+                    <Snackbar
+                        open={snackbar.open}
+                        autoHideDuration={5000}
+                        onClose={handleSnackbarClose}
+                    >
+                        <Alert severity={snackbar.severity} variant='filled'>
+                            {snackbar.message}
+                        </Alert>
+                    </Snackbar>
+                </>
+            )}
+            {showSeccionDocenteDepartamento && (
+                <Button onClick={handleVolver}>Volver</Button>
+            )}
         </div>
     );
 }
