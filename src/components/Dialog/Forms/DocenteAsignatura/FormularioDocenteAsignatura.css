@@ -1,0 +1,12 @@
+.docente-asignatura-main-container {
+    width: 800px;
+}
+
+.docente-asignatura-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.docente-asignatura-input-box {
+    padding-top: 20px;
+}

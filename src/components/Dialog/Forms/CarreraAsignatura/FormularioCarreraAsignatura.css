@@ -1,0 +1,12 @@
+.carrera-asignatura-main-container {
+    width: 800px;
+}
+
+.carrera-asignatura-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.carrera-asignatura-input-box {
+    padding-top: 20px;
+}
