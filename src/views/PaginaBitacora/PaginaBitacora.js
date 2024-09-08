@@ -3,24 +3,41 @@ import { AppBar, Typography, Card, Button } from '@mui/material';
 import Controls from '../../components/Controls/Controls';
 import Confirmation from '../../../src/components/Dialog/Confimation/Confirmation';
 import AsistenciaDataGrid from '../../components/DataGrid/AsistenciaDataGrid';
-import { obtenerPeriodos } from '../../services/periodos.service';
+import { obtenerAsignaturas } from '../../services/asignaturas.service';
+import { obtenerBitacora } from '../../services/bitacora.service';
 import { obtenerDepartamentos } from '../../services/departamentos.service';
 import { Columns } from './BitacoraColumns';
 
 import './PaginaBitacora.css';
 
 const PaginaBitacora = () => {
+    const [datos, setDatos] = useState([]);
     const [areaConocimiento, setAreaConocimiento] = useState(1);
     const [areasConocimiento, setAreasConocimiento] = useState([]);
-    const [periodos, setPeriodos] = useState([]);
-    const [periodo, setPeriodo] = useState(1);
+    const [asignaturas, setAsignaturas] = useState([]);
+    const [asignatura, setAsignatura] = useState(2);
     const [estadoConfirm, setEstadoConfirm] = useState(false);
 
     const cargarDatos = async () => {
-        const pe = await obtenerPeriodos();
-        setPeriodos(pe);
+        const asig = await obtenerAsignaturas();
+        setAsignaturas(asig);
         const dep = await obtenerDepartamentos();
         setAreasConocimiento(dep);
+        /*const data = await obtenerBitacora(areaConocimiento, asignatura);
+        const datosModificados = data.map(dato => ({
+            ...dato,
+            idAsistencia: dato.idDocenteAsignatura
+        }));
+        setDatos(datosModificados);*/
+    };
+
+    const cargarBitacora = async () => {
+        const data = await obtenerBitacora(areaConocimiento, asignatura);
+        const datosModificados = data.map(dato => ({
+            ...dato,
+            idAsistencia: dato.idDocenteAsignatura
+        }));
+        setDatos(datosModificados);
     };
 
     const handleConfirm = () => {
@@ -32,44 +49,55 @@ const PaginaBitacora = () => {
     };
 
     useEffect(() => {
-        cargarDatos();
+        const cargar = async () => {
+            await cargarDatos();
+            await cargarBitacora();
+        };
+        cargar();
     }, []);
 
-    const data = [
+    useEffect(() => {
+        cargarBitacora();
+    }, [areaConocimiento, asignatura]);
+
+    /*const data = [
         {
-            idDepartamento: 1,
-            AreaConocimiento: 'Agrícola',
-            Carrera: 'Ingeniería Química',
-            Docente: 'Ernesto Molina',
-            Asignatura: 'Matemáticas II',
-            Grupo: '2T2-QUI',
-            Dia: '23/06/2024',
+            idAsistencia: 1,
+            NombreDepartamento: 'Agrícola',
+            NombreCarrera: 'Ingeniería Química',
+            NombreDocente: 'Ernesto Molina',
+            NombreAsignatura: 'Matemáticas II',
+            NombreGrupo: '2T2-QUI',
+            Dia: '10/09/2024',
             Periodo: '2T',
             Asistencia: false,
         },
         {
-            idDepartamento: 2,
-            AreaConocimiento: 'Agrícola',
-            Carrera: 'Ingeniería Agrícola',
-            Docente: 'Richard Arauz',
-            Asignatura: 'Matemáticas II',
-            Grupo: '2T3-A',
-            Dia: '23/06/2024',
+            idAsistencia: 2,
+            NombreDepartamento: 'Agrícola',
+            NombreCarrera: 'Ingeniería Agrícola',
+            NombreDocente: 'Richard Arauz',
+            NombreAsignatura: 'Matemáticas II',
+            NombreGrupo: '2T3-A',
+            Dia: '10/09/2024',
             Periodo: '2T',
             Asistencia: false,
-        },
-        {
-            idDepartamento: 3,
-            AreaConocimiento: 'Agrícola',
-            Carrera: 'Ingeniería Agrícola',
-            Docente: 'prueba',
-            Asignatura: 'Matemáticas II',
-            Grupo: '2T2-A',
-            Dia: '23/06/2024',
-            Periodo: '2T',
-            Asistencia: false,
-        },
+        }
     ]
+
+    const data2 = [
+        {
+            idAsistencia: 1,
+            NombreDepartamento: 'Ingeniería y afines',
+            NombreCarrera: 'Arquitectura',
+            NombreDocente: 'Ernesto Molina',
+            NombreAsignatura: 'Dibujo Téctico I',
+            NombreGrupo: '2T1-A',
+            Dia: '10/09/2024',
+            Periodo: '2T',
+            Asistencia: false,
+        }
+    ]*/
 
 
     const styles = {
@@ -117,11 +145,11 @@ const PaginaBitacora = () => {
                                     valueField="Nombre"
                                 />
                                 <Controls.SelectInput
-                                    label="Períodos"
-                                    value={periodo}
-                                    onChange={setPeriodo}
-                                    items={periodos}
-                                    keyField="idPeriodo"
+                                    label="Asignaturas"
+                                    value={asignatura}
+                                    onChange={setAsignatura}
+                                    items={asignaturas}
+                                    keyField="idAsignatura"
                                     valueField="Nombre"
                                 />
                             </div>
@@ -136,11 +164,15 @@ const PaginaBitacora = () => {
                             </div>
                         </div>
                         <div className='bitacora-departamentos'>
-                            <AsistenciaDataGrid
-                                data={data}
-                                columns={Columns}
-                                idField='idDepartamento'
-                            />
+                            {datos.length > 0 ? (
+                                <AsistenciaDataGrid
+                                    data={datos}
+                                    columns={Columns}
+                                    idField='idAsistencia'
+                                />
+                            ) : (
+                                <Typography>No hay datos disponibles</Typography>
+                            )}
                         </div>
                     </div>
 

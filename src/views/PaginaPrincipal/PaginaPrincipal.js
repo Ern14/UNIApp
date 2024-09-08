@@ -61,10 +61,6 @@ const PaginaPrincipal = () => {
         {
             asistencia: 6,
             inasistencia: 0
-        },
-        {
-            asistencia: 3,
-            inasistencia: 3
         }
     ];
 
@@ -119,7 +115,7 @@ const PaginaPrincipal = () => {
                         <div className='graficos-inicio'>
                             <BarChart
                                 dataset={dataset}
-                                xAxis={[{ scaleType: 'band', data: ['Ernesto Molina', 'Richard Arauz', 'prueba'] }]}
+                                xAxis={[{ scaleType: 'band', data: ['Ernesto Molina', 'Richard Arauz'] }]}
                                 series={[
                                     { dataKey: 'asistencia', label: 'Asistencias' },
                                     { dataKey: 'inasistencia', label: 'Inasistencias' },
@@ -131,8 +127,8 @@ const PaginaPrincipal = () => {
                                 series={[
                                     {
                                         data: [
-                                            { id: 0, value: 13, label: 'Asistencias' },
-                                            { id: 1, value: 5, label: 'Inasistencias' },
+                                            { id: 0, value: 10, label: 'Asistencias' },
+                                            { id: 1, value: 2, label: 'Inasistencias' },
                                         ],
                                     },
                                 ]}
