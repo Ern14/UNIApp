@@ -16,8 +16,11 @@ const PaginaPrincipal = () => {
     const [areaConocimiento, setAreaConocimiento] = useState(1);
     const [areasConocimiento, setAreasConocimiento] = useState([]);
     const [periodos, setPeriodos] = useState([]);
-    const [periodo, setPeriodo] = useState(1);
+    const [periodo, setPeriodo] = useState(6);
     const [selectedDate, setSelectedDate] = useState(dayjs());
+
+    const [barData, setBarData] = useState([]);
+    const [pieData, setPieData] = useState([]);
 
     const cargarDatos = async () => {
         const pe = await obtenerPeriodos();
@@ -30,6 +33,20 @@ const PaginaPrincipal = () => {
         cargarDatos();
         setSelectedDate(dayjs());
     }, []);
+
+    useEffect(() => {
+        const fechaSeleccionada = selectedDate.format('DD/MM/YYYY');
+        if (fechaSeleccionada === '10/09/2024' && areaConocimiento === 1) {
+            setBarData(dataset);
+            setPieData(datapie);
+        } else if (fechaSeleccionada === '10/09/2024' && areaConocimiento === 2) {
+            setBarData(dataset2);
+            setPieData(datapie2);
+        } else {
+            setBarData(dataset3);
+            setPieData(datapie3);
+        }
+    }, [selectedDate, areaConocimiento]);
 
     const styles = {
         appbar: {
@@ -62,6 +79,43 @@ const PaginaPrincipal = () => {
             asistencia: 6,
             inasistencia: 0
         }
+    ];
+
+    const dataset2 = [
+        {
+            asistencia: 1,
+            inasistencia: 0
+        },
+        {
+            asistencia: 0,
+            inasistencia: 0
+        }
+    ];
+
+    const dataset3 = [
+        {
+            asistencia: 0,
+            inasistencia: 0
+        },
+        {
+            asistencia: 0,
+            inasistencia: 0
+        }
+    ];
+
+    const datapie = [
+        { id: 0, value: 10, label: 'Asistencias' },
+        { id: 1, value: 2, label: 'Inasistencias' },
+    ];
+
+    const datapie2 = [
+        { id: 0, value: 1, label: 'Asistencias' },
+        { id: 1, value: 0, label: 'Inasistencias' },
+    ];
+
+    const datapie3 = [
+        { id: 0, value: 0, label: 'Asistencias' },
+        { id: 1, value: 0, label: 'Inasistencias' },
     ];
 
     return (
@@ -114,7 +168,7 @@ const PaginaPrincipal = () => {
 
                         <div className='graficos-inicio'>
                             <BarChart
-                                dataset={dataset}
+                                dataset={barData}
                                 xAxis={[{ scaleType: 'band', data: ['Ernesto Molina', 'Richard Arauz'] }]}
                                 series={[
                                     { dataKey: 'asistencia', label: 'Asistencias' },
@@ -126,10 +180,7 @@ const PaginaPrincipal = () => {
                             <PieChart
                                 series={[
                                     {
-                                        data: [
-                                            { id: 0, value: 10, label: 'Asistencias' },
-                                            { id: 1, value: 2, label: 'Inasistencias' },
-                                        ],
+                                        data: pieData,
                                     },
                                 ]}
                                 width={400}
