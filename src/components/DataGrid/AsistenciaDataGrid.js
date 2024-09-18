@@ -6,27 +6,48 @@ const AsistenciaDataGrid = (props) => {
   const { data, columns, idField } = props;
   const [rows, setRows] = useState(data);
 
-  const handleCheckboxChange = (rowId) => {
+  const handleCheckboxChange = (rowId, field) => {
     setRows(prevRows =>
       prevRows.map(row =>
-        row[idField] === rowId ? { ...row, Asistencia: !row.Asistencia } : row
+        row[idField] === rowId ? { ...row, [field]: !row[field] } : row
       )
     );
   };
 
   const defaultColumns = [
-    {
-        field: 'asistencia',
-        headerName: 'Asistencia',
-        width: 150,
-        renderCell: (params) => (
-          <Checkbox
-          checked={params.row.Asistencia}
-          onChange={() => handleCheckboxChange(params.row[idField])}
-        />
-        ),
-      },
     ...columns,
+    {
+      field: 'firmaEntrada',
+      headerName: 'Firma Entrada',
+      width: 150,
+      renderCell: (params) => (
+        <Checkbox
+          checked={params.row.FirmaEntrada}
+          onChange={() => handleCheckboxChange(params.row[idField], 'FirmaEntrada')}
+        />
+      ),
+    },
+    {
+      field: 'firmaSalida',
+      headerName: 'Firma Salida',
+      width: 150,
+      renderCell: (params) => (
+        <Checkbox
+          checked={params.row.FirmaSalida}
+          onChange={() => handleCheckboxChange(params.row[idField], 'FirmaSalida')}
+        />
+      ),
+    },
+    {
+      field: 'asistencia',
+      headerName: 'Asistencia',
+      width: 150,
+      renderCell: (params) => (
+        <span>
+          {params.row.FirmaEntrada || params.row.FirmaSalida ? 'Presente' : 'Ausente'}
+        </span>
+      ),
+    },
   ];
 
   return (

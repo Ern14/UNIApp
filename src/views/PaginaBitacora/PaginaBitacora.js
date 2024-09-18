@@ -5,24 +5,29 @@ import Confirmation from '../../../src/components/Dialog/Confimation/Confirmatio
 import AsistenciaDataGrid from '../../components/DataGrid/AsistenciaDataGrid';
 import { obtenerAsignaturas } from '../../services/asignaturas.service';
 import { obtenerBitacora } from '../../services/bitacora.service';
-import { obtenerDepartamentos } from '../../services/departamentos.service';
+import { obtenerCarreras } from '../../services/carreras.service';
+import { obtenerPeriodos } from '../../services/periodos.service';
 import { Columns } from './BitacoraColumns';
 
 import './PaginaBitacora.css';
 
 const PaginaBitacora = () => {
     const [datos, setDatos] = useState([]);
-    const [areaConocimiento, setAreaConocimiento] = useState(1);
-    const [areasConocimiento, setAreasConocimiento] = useState([]);
+    const [carrera, setCarrera] = useState(1);
+    const [carreras, setCarreras] = useState([]);
     const [asignaturas, setAsignaturas] = useState([]);
     const [asignatura, setAsignatura] = useState(2);
+    const [periodos, setPeriodos] = useState([]);
+    const [periodo, setPeriodo] = useState(1);
     const [estadoConfirm, setEstadoConfirm] = useState(false);
 
     const cargarDatos = async () => {
         const asig = await obtenerAsignaturas();
         setAsignaturas(asig);
-        const dep = await obtenerDepartamentos();
-        setAreasConocimiento(dep);
+        const dep = await obtenerCarreras();
+        setCarreras(dep);
+        const per = await obtenerPeriodos();
+        setPeriodos(per);
         /*const data = await obtenerBitacora(areaConocimiento, asignatura);
         const datosModificados = data.map(dato => ({
             ...dato,
@@ -32,7 +37,7 @@ const PaginaBitacora = () => {
     };
 
     const cargarBitacora = async () => {
-        const data = await obtenerBitacora(areaConocimiento, asignatura);
+        const data = await obtenerBitacora(carrera, asignatura);
         const datosModificados = data.map(dato => ({
             ...dato,
             idAsistencia: dato.idDocenteAsignatura
@@ -58,7 +63,7 @@ const PaginaBitacora = () => {
 
     useEffect(() => {
         cargarBitacora();
-    }, [areaConocimiento, asignatura]);
+    }, [carrera, asignatura,periodo]);
 
     /*const data = [
         {
@@ -137,11 +142,11 @@ const PaginaBitacora = () => {
                         <div className='top-bitacora'>
                             <div className='filtros-bitacora'>
                                 <Controls.SelectInput
-                                    label="Areá de conocimiento"
-                                    value={areaConocimiento}
-                                    onChange={setAreaConocimiento}
-                                    items={areasConocimiento}
-                                    keyField="idDepartamento"
+                                    label="Carrera"
+                                    value={carrera}
+                                    onChange={setCarrera}
+                                    items={carreras}
+                                    keyField="idCarrera"
                                     valueField="Nombre"
                                 />
                                 <Controls.SelectInput
@@ -150,6 +155,14 @@ const PaginaBitacora = () => {
                                     onChange={setAsignatura}
                                     items={asignaturas}
                                     keyField="idAsignatura"
+                                    valueField="Nombre"
+                                />
+                                <Controls.SelectInput
+                                    label="Períodos"
+                                    value={periodo}
+                                    onChange={setAsignatura}
+                                    items={periodos}
+                                    keyField="idPeriodo"
                                     valueField="Nombre"
                                 />
                             </div>
