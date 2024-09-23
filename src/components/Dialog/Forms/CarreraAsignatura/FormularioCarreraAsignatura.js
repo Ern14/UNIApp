@@ -40,7 +40,6 @@ const FormularioCarreraAsignatura = (props) => {
     };
 
     useEffect(() => {
-        console.log(idCarreraAsignatura)
         const cargarDatos = async () => {
             const result = await obtenerCarreraAsignaturaxId(idCarreraAsignatura);
             setAsignatura(result.datos[0].idAsignatura);

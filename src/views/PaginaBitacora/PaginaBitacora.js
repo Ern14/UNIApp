@@ -7,7 +7,13 @@ import { obtenerAsignaturas } from '../../services/asignaturas.service';
 import { obtenerBitacora } from '../../services/bitacora.service';
 import { obtenerCarreras } from '../../services/carreras.service';
 import { obtenerPeriodos } from '../../services/periodos.service';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Columns } from './BitacoraColumns';
+import { data1, data2, data3, data4 } from '../../dummy/dummyBitacora';
+import dayjs from 'dayjs';
 
 import './PaginaBitacora.css';
 
@@ -20,6 +26,13 @@ const PaginaBitacora = () => {
     const [periodos, setPeriodos] = useState([]);
     const [periodo, setPeriodo] = useState(1);
     const [estadoConfirm, setEstadoConfirm] = useState(false);
+
+    const [selectedDate, setSelectedDate] = useState(dayjs());
+
+    const [presentes, setPresentes] = useState(0);
+    const [ausentes, setAusentes] = useState(0);
+    const [porcentajePresentes, setPorcentajePresentes] = useState(0);
+    const [porcentajeAusentes, setPorcentajeAusentes] = useState(0);
 
     const cargarDatos = async () => {
         const asig = await obtenerAsignaturas();
@@ -37,12 +50,12 @@ const PaginaBitacora = () => {
     };
 
     const cargarBitacora = async () => {
-        const data = await obtenerBitacora(carrera, asignatura);
-        const datosModificados = data.map(dato => ({
+        //const data = await obtenerBitacora(carrera, asignatura);
+        /*const datosModificados = data.map(dato => ({
             ...dato,
             idAsistencia: dato.idDocenteAsignatura
-        }));
-        setDatos(datosModificados);
+        }));*/
+        setDatos(data1);
     };
 
     const handleConfirm = () => {
@@ -61,49 +74,76 @@ const PaginaBitacora = () => {
         cargar();
     }, []);
 
-    useEffect(() => {
+    const calcularAsistencias = (data) => {
+        const total = data.length;
+        const presentes = data.filter(dato => dato.FirmaEntrada || dato.FirmaSalida).length;
+        const ausentes = total - presentes;
+
+        const porcentajePresentes = (presentes / total) * 100;
+        const porcentajeAusentes = (ausentes / total) * 100;
+
+        setPresentes(presentes);
+        setAusentes(ausentes);
+        setPorcentajePresentes(porcentajePresentes.toFixed(2));
+        setPorcentajeAusentes(porcentajeAusentes.toFixed(2));
+    };
+
+    const handleAsistenciaChange = (updatedData) => {
+        // Llama a calcularAsistencias con los datos actualizados
+        calcularAsistencias(updatedData);
+    };
+
+    /*useEffect(() => {
         cargarBitacora();
-    }, [carrera, asignatura,periodo]);
+    }, [carrera, asignatura,periodo]);*/
 
-    /*const data = [
-        {
-            idAsistencia: 1,
-            NombreDepartamento: 'Agrícola',
-            NombreCarrera: 'Ingeniería Química',
-            NombreDocente: 'Ernesto Molina',
-            NombreAsignatura: 'Matemáticas II',
-            NombreGrupo: '2T2-QUI',
-            Dia: '10/09/2024',
-            Periodo: '2T',
-            Asistencia: false,
-        },
-        {
-            idAsistencia: 2,
-            NombreDepartamento: 'Agrícola',
-            NombreCarrera: 'Ingeniería Agrícola',
-            NombreDocente: 'Richard Arauz',
-            NombreAsignatura: 'Matemáticas II',
-            NombreGrupo: '2T3-A',
-            Dia: '10/09/2024',
-            Periodo: '2T',
-            Asistencia: false,
+    useEffect(() => {
+        const calcularAsistencia = () => {
+            const total = datos.length;
+            const presentes = datos.filter(d => d.FirmaEntrada || d.FirmaSalida).length;
+            const ausentes = total - presentes;
+
+            setPresentes(presentes);
+            setAusentes(ausentes);
+
+            if (total > 0) {
+                setPorcentajePresentes(((presentes / total) * 100).toFixed(2));
+                setPorcentajeAusentes(((ausentes / total) * 100).toFixed(2));
+            } else {
+                setPorcentajePresentes(0);
+                setPorcentajeAusentes(0);
+            }
+        };
+
+        calcularAsistencia();
+    }, [datos]);
+
+    useEffect(() => {
+        const recargar = async () => {
+            setDatos([]); // Forzar que React note el cambio de estado
+            setTimeout(() => { // Usar un pequeño retraso para asegurar la actualización
+                switch (periodo) {
+                    case 1:
+                        setDatos([...data1]); // Forzar una nueva referencia
+                        break;
+                    case 2:
+                        setDatos([...data2]);
+                        break;
+                    case 3:
+                        setDatos([...data3]);
+                        break;
+                    case 4:
+                        setDatos([...data4]);
+                        break;
+                    default:
+                        setDatos([]); // Limpiar la tabla si no hay coincidencia
+                        break;
+                }
+            }, 0);
         }
-    ]
+        recargar();
 
-    const data2 = [
-        {
-            idAsistencia: 1,
-            NombreDepartamento: 'Ingeniería y afines',
-            NombreCarrera: 'Arquitectura',
-            NombreDocente: 'Ernesto Molina',
-            NombreAsignatura: 'Dibujo Téctico I',
-            NombreGrupo: '2T1-A',
-            Dia: '10/09/2024',
-            Periodo: '2T',
-            Asistencia: false,
-        }
-    ]*/
-
+    }, [periodo]);
 
     const styles = {
         appbar: {
@@ -124,6 +164,11 @@ const PaginaBitacora = () => {
         },
         button: {
             backgroundColor: 'darkblue'
+        },
+        stats: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '20px'
         }
     };
 
@@ -140,6 +185,19 @@ const PaginaBitacora = () => {
                 <Card sx={styles.card}>
                     <div className='bitacora-card-content'>
                         <div className='top-bitacora'>
+                            <div className='top-date'>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DemoContainer components={['DatePicker']}>
+                                        <DatePicker
+                                            label="Fecha"
+                                            value={selectedDate}
+                                            onChange={(newValue) => {
+                                                setSelectedDate(newValue);
+                                            }}
+                                        />
+                                    </DemoContainer>
+                                </LocalizationProvider>
+                            </div>
                             <div className='filtros-bitacora'>
                                 <Controls.SelectInput
                                     label="Carrera"
@@ -149,18 +207,18 @@ const PaginaBitacora = () => {
                                     keyField="idCarrera"
                                     valueField="Nombre"
                                 />
-                                <Controls.SelectInput
+                                {/*<Controls.SelectInput
                                     label="Asignaturas"
                                     value={asignatura}
                                     onChange={setAsignatura}
                                     items={asignaturas}
                                     keyField="idAsignatura"
                                     valueField="Nombre"
-                                />
+                                />*/}
                                 <Controls.SelectInput
                                     label="Períodos"
                                     value={periodo}
-                                    onChange={setAsignatura}
+                                    onChange={setPeriodo}
                                     items={periodos}
                                     keyField="idPeriodo"
                                     valueField="Nombre"
@@ -176,12 +234,19 @@ const PaginaBitacora = () => {
                                 </Button>
                             </div>
                         </div>
+                        <div style={styles.stats}>
+                            <Typography>Presente: {presentes}</Typography>
+                            <Typography>Ausente: {ausentes}</Typography>
+                            <Typography>Porcentaje Presente: {porcentajePresentes}%</Typography>
+                            <Typography>Porcentaje Ausente: {porcentajeAusentes}%</Typography>
+                        </div>
                         <div className='bitacora-departamentos'>
                             {datos.length > 0 ? (
                                 <AsistenciaDataGrid
                                     data={datos}
                                     columns={Columns}
                                     idField='idAsistencia'
+                                    onAsistenciaChange={handleAsistenciaChange}
                                 />
                             ) : (
                                 <Typography>No hay datos disponibles</Typography>

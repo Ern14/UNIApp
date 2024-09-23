@@ -1,4 +1,4 @@
-import { Home, Book, Person, Logout, Badge } from '@mui/icons-material';
+import { Home, Book, Person, Logout, Badge, InsertDriveFile } from '@mui/icons-material';
 
 export const menuItems = [
     {
@@ -27,6 +27,10 @@ export const menuCatalogo = [
 ]
 
 export const menuUsuario = [
+    {
+        text: 'Manual de usuario',
+        icon: <InsertDriveFile />,
+    },
     {
         text: 'Cerrar sesión',
         icon: <Logout />,

@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Checkbox } from '@mui/material';
 
 const AsistenciaDataGrid = (props) => {
-  const { data, columns, idField } = props;
-  const [rows, setRows] = useState(data);
+  const { data, columns, idField, onAsistenciaChange } = props;
+
+  const initializeRows = (data) => {
+    return data.map(row => ({
+      ...row,
+      FirmaEntrada: row.FirmaEntrada ?? false, // Si es undefined, setear en false
+      FirmaSalida: row.FirmaSalida ?? false   // Si es undefined, setear en false
+    }));
+  };
+
+  const [rows, setRows] = useState(initializeRows(data));
 
   const handleCheckboxChange = (rowId, field) => {
-    setRows(prevRows =>
-      prevRows.map(row =>
-        row[idField] === rowId ? { ...row, [field]: !row[field] } : row
-      )
+    const updatedRows = rows.map(row =>
+      row[idField] === rowId ? { ...row, [field]: !row[field] } : row
     );
+    setRows(updatedRows);
+    onAsistenciaChange(updatedRows); // Llama a la función para recalcular los porcentajes
   };
+
+  useEffect(() => {
+    console.log(data)
+    setRows(initializeRows(data));
+  }, [data]);
 
   const defaultColumns = [
     ...columns,
