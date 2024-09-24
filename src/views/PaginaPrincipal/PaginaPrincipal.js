@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Typography, Card } from '@mui/material';
+import { AppBar, Typography, Card, MenuItem, Select } from '@mui/material';
 import { BarChart, PieChart } from '@mui/x-charts';
 import Controls from '../../components/Controls/Controls';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -29,11 +29,27 @@ const PaginaPrincipal = () => {
         setAreasConocimiento(dep);
     };
 
+    const [viewMode, setViewMode] = useState('Dia');  // "Dia", "Semanal", "Semestral"
+    const [semestre, setSemestre] = useState(1);
+    const [semana, setSemana] = useState(1);
+
+    const handleViewModeChange = (event) => {
+        setViewMode(event.target.value);
+    };
+
+    const handleSemestreChange = (event) => {
+        setSemestre(event.target.value);
+    };
+
+    const handleSemanaChange = (event) => {
+        setSemana(event.target.value);
+    };
+
     useEffect(() => {
         cargarDatos();
         setSelectedDate(dayjs());
     }, []);
-
+    
     useEffect(() => {
         const fechaSeleccionada = selectedDate.format('DD/MM/YYYY');
         if (fechaSeleccionada === '10/09/2024' && areaConocimiento === 1) {
@@ -62,7 +78,7 @@ const PaginaPrincipal = () => {
             fontWeight: 'bold'
         },
         card: {
-            height: '90vh',
+            height: '80vh',
             width: '90%'
         },
         button: {
@@ -119,7 +135,7 @@ const PaginaPrincipal = () => {
     ];
 
     return (
-        <div className='container'>
+        <div className='principal-container'>
             <AppBar
                 sx={styles.appbar}
             >
@@ -131,62 +147,61 @@ const PaginaPrincipal = () => {
                 <Card sx={styles.card}>
                     <div className='dashboard-card-content'>
                         <div className='top-inicio'>
-                            <div className='top-date'>
+                        <Select
+                                value={viewMode}
+                                onChange={handleViewModeChange}
+                                sx={{ marginBottom: '20px' }}
+                            >
+                                <MenuItem value="Dia">Día</MenuItem>
+                                <MenuItem value="Semanal">Semanal</MenuItem>
+                                <MenuItem value="Semestral">Semestral</MenuItem>
+                            </Select>
+
+                            {/* Condicionales para mostrar componentes según la selección */}
+                            {viewMode === 'Dia' && (
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DemoContainer components={['DatePicker']}>
-                                        <DatePicker
-                                            label="Fecha"
-                                            value={selectedDate}
-                                            onChange={(newValue) => {
-                                                setSelectedDate(newValue);
-                                            }}
-                                        />
-                                    </DemoContainer>
+                                    <DatePicker
+                                        label="Seleccione el día"
+                                        value={selectedDate}
+                                        onChange={(newValue) => setSelectedDate(newValue)}
+                                    />
                                 </LocalizationProvider>
-                            </div>
-                            <div className='top-date'>
-                                <Controls.SelectInput
-                                    label="Areá de conocimiento"
-                                    value={areaConocimiento}
-                                    onChange={setAreaConocimiento}
-                                    items={areasConocimiento}
-                                    keyField="idDepartamento"
-                                    valueField="Nombre"
-                                />
-                            </div>
-                            <div className='top-input'>
-                                <Controls.SelectInput
-                                    label="Períodos"
-                                    value={periodo}
-                                    onChange={setPeriodo}
-                                    items={periodos}
-                                    keyField="idPeriodo"
-                                    valueField="Nombre"
-                                />
-                            </div>
-                        </div>
+                            )}
 
-                        <div className='graficos-inicio'>
-                            <BarChart
-                                dataset={barData}
-                                xAxis={[{ scaleType: 'band', data: ['Ernesto Molina', 'Richard Arauz'] }]}
-                                series={[
-                                    { dataKey: 'asistencia', label: 'Asistencias' },
-                                    { dataKey: 'inasistencia', label: 'Inasistencias' },
-                                ]}
-                                width={500}
-                                height={300}
-                            />
-                            <PieChart
-                                series={[
-                                    {
-                                        data: pieData,
-                                    },
-                                ]}
-                                width={400}
-                                height={200}
-                            />
+                            {viewMode === 'Semanal' && (
+                                <div>
+                                    <Select
+                                        value={semestre}
+                                        onChange={handleSemestreChange}
+                                        sx={{ marginBottom: '20px' }}
+                                    >
+                                        <MenuItem value={1}>Semestre 1</MenuItem>
+                                        <MenuItem value={2}>Semestre 2</MenuItem>
+                                    </Select>
+                                    <Select
+                                        value={semana}
+                                        onChange={handleSemanaChange}
+                                        sx={{ marginBottom: '20px' }}
+                                    >
+                                        {Array.from({ length: 18 }, (_, index) => (
+                                            <MenuItem key={index + 1} value={index + 1}>
+                                                Semana {index + 1}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </div>
+                            )}
 
+                            {viewMode === 'Semestral' && (
+                                <Select
+                                    value={semestre}
+                                    onChange={handleSemestreChange}
+                                    sx={{ marginBottom: '20px' }}
+                                >
+                                    <MenuItem value={1}>Semestre 1</MenuItem>
+                                    <MenuItem value={2}>Semestre 2</MenuItem>
+                                </Select>
+                            )}
                         </div>
                     </div>
                 </Card>

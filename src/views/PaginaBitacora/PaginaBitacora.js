@@ -181,7 +181,7 @@ const PaginaBitacora = () => {
                     sx={styles.typography}
                 >Bitácora</Typography>
             </AppBar>
-            <div className='info-container'>
+            <div className='info-bitacora'>
                 <Card sx={styles.card}>
                     <div className='bitacora-card-content'>
                         <div className='top-bitacora'>
