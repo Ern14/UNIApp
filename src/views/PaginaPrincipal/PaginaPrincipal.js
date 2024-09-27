@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Typography, Card, MenuItem, Select } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, AppBar, Typography, Card, MenuItem, Select, Grid } from '@mui/material';
 import { BarChart, PieChart } from '@mui/x-charts';
 import Controls from '../../components/Controls/Controls';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -19,8 +19,8 @@ const PaginaPrincipal = () => {
     const [periodo, setPeriodo] = useState(6);
     const [selectedDate, setSelectedDate] = useState(dayjs());
 
-    const [barData, setBarData] = useState([]);
-    const [pieData, setPieData] = useState([]);
+    //const [barData, setBarData] = useState([]);
+    //const [pieData, setPieData] = useState([]);
 
     const cargarDatos = async () => {
         const pe = await obtenerPeriodos();
@@ -49,20 +49,7 @@ const PaginaPrincipal = () => {
         cargarDatos();
         setSelectedDate(dayjs());
     }, []);
-    
-    useEffect(() => {
-        const fechaSeleccionada = selectedDate.format('DD/MM/YYYY');
-        if (fechaSeleccionada === '10/09/2024' && areaConocimiento === 1) {
-            setBarData(dataset);
-            setPieData(datapie);
-        } else if (fechaSeleccionada === '10/09/2024' && areaConocimiento === 2) {
-            setBarData(dataset2);
-            setPieData(datapie2);
-        } else {
-            setBarData(dataset3);
-            setPieData(datapie3);
-        }
-    }, [selectedDate, areaConocimiento]);
+
 
     const styles = {
         appbar: {
@@ -86,53 +73,34 @@ const PaginaPrincipal = () => {
         }
     };
 
-    const dataset = [
-        {
-            asistencia: 4,
-            inasistencia: 2
-        },
-        {
-            asistencia: 6,
-            inasistencia: 0
-        }
+    const data = [
+        { carrera: 'Agrícola', asistencias: 117, ausencias: 47, porcentajeAsistencias: '71%', porcentajeAusencias: '29%' },
+        { carrera: 'Química', asistencias: 145, ausencias: 49, porcentajeAsistencias: '75%', porcentajeAusencias: '25%' },
+        { carrera: 'Computación', asistencias: 238, ausencias: 87, porcentajeAsistencias: '73%', porcentajeAusencias: '27%' },
+        { carrera: 'Sistema', asistencias: 238, ausencias: 109, porcentajeAsistencias: '69%', porcentajeAusencias: '31%' },
+        { carrera: 'Electrónica', asistencias: 124, ausencias: 50, porcentajeAsistencias: '71%', porcentajeAusencias: '29%' },
+        { carrera: 'Telecom', asistencias: 62, ausencias: 27, porcentajeAsistencias: '70%', porcentajeAusencias: '30%' },
+        { carrera: 'Arquitectura', asistencias: 410, ausencias: 193, porcentajeAsistencias: '68%', porcentajeAusencias: '32%' },
+        { carrera: 'Civil', asistencias: 333, ausencias: 98, porcentajeAsistencias: '77%', porcentajeAusencias: '23%' },
+        { carrera: 'Eléctrica', asistencias: 148, ausencias: 48, porcentajeAsistencias: '66%', porcentajeAusencias: '34%' },
+        { carrera: 'Industrial', asistencias: 337, ausencias: 124, porcentajeAsistencias: '73%', porcentajeAusencias: '27%' },
+        { carrera: 'Mecánica', asistencias: 125, ausencias: 58, porcentajeAsistencias: '68%', porcentajeAusencias: '32%' }
     ];
 
-    const dataset2 = [
-        {
-            asistencia: 1,
-            inasistencia: 0
-        },
-        {
-            asistencia: 0,
-            inasistencia: 0
-        }
-    ];
-
-    const dataset3 = [
-        {
-            asistencia: 0,
-            inasistencia: 0
-        },
-        {
-            asistencia: 0,
-            inasistencia: 0
-        }
-    ];
-
-    const datapie = [
-        { id: 0, value: 10, label: 'Asistencias' },
-        { id: 1, value: 2, label: 'Inasistencias' },
-    ];
-
-    const datapie2 = [
-        { id: 0, value: 1, label: 'Asistencias' },
-        { id: 1, value: 0, label: 'Inasistencias' },
-    ];
-
-    const datapie3 = [
-        { id: 0, value: 0, label: 'Asistencias' },
-        { id: 1, value: 0, label: 'Inasistencias' },
-    ];
+    const barData = {
+        series: [
+            {
+                label: 'Inasistencias',
+                data: data.map((row) => row.ausencias)// Datos de inasistencias
+            }
+        ],
+        xAxis: [
+            {
+                scaleType: 'band', 
+                data: data.map((row) => row.carrera) 
+            }
+        ]
+    };
 
     return (
         <div className='principal-container'>
@@ -144,65 +112,94 @@ const PaginaPrincipal = () => {
                 >Dashboard</Typography>
             </AppBar>
             <div className='info-container'>
-                <Card sx={styles.card}>
+                <Card sx={{ height: '80vh', width: '90%' }}>
                     <div className='dashboard-card-content'>
-                        <div className='top-inicio'>
-                        <Select
-                                value={viewMode}
-                                onChange={handleViewModeChange}
-                                sx={{ marginBottom: '20px' }}
-                            >
-                                <MenuItem value="Dia">Día</MenuItem>
-                                <MenuItem value="Semanal">Semanal</MenuItem>
-                                <MenuItem value="Semestral">Semestral</MenuItem>
-                            </Select>
-
-                            {/* Condicionales para mostrar componentes según la selección */}
-                            {viewMode === 'Dia' && (
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DatePicker
-                                        label="Seleccione el día"
-                                        value={selectedDate}
-                                        onChange={(newValue) => setSelectedDate(newValue)}
-                                    />
-                                </LocalizationProvider>
-                            )}
-
-                            {viewMode === 'Semanal' && (
-                                <div>
+                        <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                                <div className='top-inicio'>
                                     <Select
-                                        value={semestre}
-                                        onChange={handleSemestreChange}
+                                        value={viewMode}
+                                        onChange={handleViewModeChange}
                                         sx={{ marginBottom: '20px' }}
                                     >
-                                        <MenuItem value={1}>Semestre 1</MenuItem>
-                                        <MenuItem value={2}>Semestre 2</MenuItem>
+                                        <MenuItem value="Dia">Día</MenuItem>
+                                        <MenuItem value="Semanal">Semanal</MenuItem>
+                                        <MenuItem value="Semestral">Semestral</MenuItem>
                                     </Select>
-                                    <Select
-                                        value={semana}
-                                        onChange={handleSemanaChange}
-                                        sx={{ marginBottom: '20px' }}
-                                    >
-                                        {Array.from({ length: 18 }, (_, index) => (
-                                            <MenuItem key={index + 1} value={index + 1}>
-                                                Semana {index + 1}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
+
+                                    {/* Condicionales para mostrar componentes según la selección */}
+                                    {viewMode === 'Dia' && (
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <DatePicker
+                                                label="Seleccione el día"
+                                                value={selectedDate}
+                                                onChange={(newValue) => setSelectedDate(newValue)}
+                                            />
+                                        </LocalizationProvider>
+                                    )}
+
+                                    {viewMode === 'Semanal' && (
+                                        <div>
+                                            <Select value={semestre} onChange={handleSemestreChange} sx={{ marginBottom: '20px' }}>
+                                                <MenuItem value={1}>Semestre 1</MenuItem>
+                                                <MenuItem value={2}>Semestre 2</MenuItem>
+                                            </Select>
+                                            <Select value={semana} onChange={handleSemanaChange} sx={{ marginBottom: '20px' }}>
+                                                {Array.from({ length: 18 }, (_, index) => (
+                                                    <MenuItem key={index + 1} value={index + 1}>
+                                                        Semana {index + 1}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </div>
+                                    )}
+
+                                    {viewMode === 'Semestral' && (
+                                        <Select value={semestre} onChange={handleSemestreChange} sx={{ marginBottom: '20px' }}>
+                                            <MenuItem value={1}>Semestre 1</MenuItem>
+                                            <MenuItem value={2}>Semestre 2</MenuItem>
+                                        </Select>
+                                    )}
                                 </div>
-                            )}
 
-                            {viewMode === 'Semestral' && (
-                                <Select
-                                    value={semestre}
-                                    onChange={handleSemestreChange}
-                                    sx={{ marginBottom: '20px' }}
-                                >
-                                    <MenuItem value={1}>Semestre 1</MenuItem>
-                                    <MenuItem value={2}>Semestre 2</MenuItem>
-                                </Select>
-                            )}
-                        </div>
+                                <TableContainer component={Paper}>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>Carrera</TableCell>
+                                                <TableCell align="right"># de Asistencias</TableCell>
+                                                <TableCell align="right"># de Ausencias</TableCell>
+                                                <TableCell align="right">% de Asistencias</TableCell>
+                                                <TableCell align="right">% de Ausencias</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {data.map((row) => (
+                                                <TableRow key={row.carrera}>
+                                                    <TableCell component="th" scope="row">
+                                                        {row.carrera}
+                                                    </TableCell>
+                                                    <TableCell align="right">{row.asistencias}</TableCell>
+                                                    <TableCell align="right">{row.ausencias}</TableCell>
+                                                    <TableCell align="right">{row.porcentajeAsistencias}</TableCell>
+                                                    <TableCell align="right">{row.porcentajeAusencias}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <BarChart
+                                    title="Inasistencias por Carrera"
+                                    series={barData.series} 
+                                    xAxis={barData.xAxis}
+                                    width={500}
+                                    height={400}
+                                />
+                            </Grid>
+                        </Grid>
                     </div>
                 </Card>
             </div>
