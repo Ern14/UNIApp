@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { eliminarUsuarios, obtenerUsuarios, filtrarUsuariosxBusqueda } from '../../../../services/usuarios.service';
 import { obtenerRoles } from '../../../../services/roles.service';
+import { obtenerCarreras } from '../../../../services/carreras.service';
 import { AppBar, Button, Typography, Card, InputAdornment, Snackbar, Alert } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import DefaultDataGrid from '../../../../components/DataGrid/DefaultDataGrid';
@@ -16,6 +17,7 @@ const SeccionUsuarios = () => {
     const [estado, setEstado] = useState(false);
     const [estadoConfirm, setEstadoConfirm] = useState(false);
     const [roles, setRoles] = useState([]);
+    const [carreras, setCarreras] = useState([]);
     const [idUsuario, setIdUsuario] = useState(null);
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
 
@@ -28,6 +30,12 @@ const SeccionUsuarios = () => {
         const result = await obtenerRoles();
         setRoles(result);
     };
+
+    const cargarCarreras = async () => {
+        const result = await obtenerCarreras();
+        setCarreras(result);
+    };
+
 
     const eliminarUsuario = async () => {
         const data = await eliminarUsuarios(idUsuario);
@@ -69,6 +77,7 @@ const SeccionUsuarios = () => {
     useEffect(() => {
         cargarDatos();
         cargarRoles();
+        cargarCarreras();
     }, []);
 
     const styles = {
@@ -140,6 +149,7 @@ const SeccionUsuarios = () => {
                 setEstado={setEstado}
                 idUsuario={idUsuario}
                 roles={roles}
+                carreras={carreras}
                 onConfirm={handleSnackbarOpen}
             />
             <Confirmation

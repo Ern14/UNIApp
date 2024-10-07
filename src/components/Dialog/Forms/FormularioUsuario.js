@@ -8,11 +8,12 @@ import { useAuth } from '../../../context/authContext';
 import './FormularioUsuario.css';
 
 const FormularioUsuario = (props) => {
-    const { estado, setEstado, idUsuario, roles, onConfirm } = props;
+    const { estado, setEstado, idUsuario, roles, carreras, onConfirm } = props;
 
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
     const [permiso, setPermiso] = useState(1);
+    const [carrera, setCarrera] = useState(1);
 
     const { user } = useAuth();
 
@@ -112,6 +113,18 @@ const FormularioUsuario = (props) => {
                                 valueField="Nombre" 
                             />
                         </div>
+                        {permiso === 3 && (
+                            <div className='input-box'>
+                                <Controls.SelectInput
+                                label="Carrera"
+                                value={carrera}
+                                onChange={setCarrera}
+                                items={carreras}
+                                keyField="idCarrera" 
+                                valueField="Nombre" 
+                            />
+                            </div>
+                        )}
                     </div>
                 </DialogContent>
                 <DialogActions>

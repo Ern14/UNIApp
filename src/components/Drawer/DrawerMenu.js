@@ -16,9 +16,14 @@ import {
     Typography
 } from '@mui/material';
 import { menuItems, menuAcordeon, menuCatalogo, menuUsuario } from '../../shared/drawerMenus';
+import { obtenerManualUsuario } from '../../services/archivo.service';
 import { ExpandMore, Assignment } from '@mui/icons-material';
 import logo from '../../assets/img/logos/logouni12.png';
 import './DrawerMenu.css'
+
+const handleManualUsuario = async () => {
+    await obtenerManualUsuario();
+};
 
 const DrawerMenu = () => {
     const { user, logout } = useAuth();
@@ -98,7 +103,11 @@ const DrawerMenu = () => {
                             <ListItem
                                 key={item.text}
                                 disablePadding
-                                onClick={() => logout()}>
+                                onClick={() =>
+                                    item.text === 'Manual de usuario'
+                                        ? handleManualUsuario()
+                                        : logout()
+                                }>
                                 <ListItemButton>
                                     <ListItemIcon >
                                         {item.icon}

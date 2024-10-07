@@ -207,14 +207,6 @@ const PaginaBitacora = () => {
                                     keyField="idCarrera"
                                     valueField="Nombre"
                                 />
-                                {/*<Controls.SelectInput
-                                    label="Asignaturas"
-                                    value={asignatura}
-                                    onChange={setAsignatura}
-                                    items={asignaturas}
-                                    keyField="idAsignatura"
-                                    valueField="Nombre"
-                                />*/}
                                 <Controls.SelectInput
                                     label="Períodos"
                                     value={periodo}

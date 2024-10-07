@@ -74,17 +74,17 @@ const PaginaPrincipal = () => {
     };
 
     const data = [
-        { carrera: 'Agrícola', asistencias: 117, ausencias: 47, porcentajeAsistencias: '71%', porcentajeAusencias: '29%' },
-        { carrera: 'Química', asistencias: 145, ausencias: 49, porcentajeAsistencias: '75%', porcentajeAusencias: '25%' },
-        { carrera: 'Computación', asistencias: 238, ausencias: 87, porcentajeAsistencias: '73%', porcentajeAusencias: '27%' },
-        { carrera: 'Sistema', asistencias: 238, ausencias: 109, porcentajeAsistencias: '69%', porcentajeAusencias: '31%' },
-        { carrera: 'Electrónica', asistencias: 124, ausencias: 50, porcentajeAsistencias: '71%', porcentajeAusencias: '29%' },
-        { carrera: 'Telecom', asistencias: 62, ausencias: 27, porcentajeAsistencias: '70%', porcentajeAusencias: '30%' },
-        { carrera: 'Arquitectura', asistencias: 410, ausencias: 193, porcentajeAsistencias: '68%', porcentajeAusencias: '32%' },
-        { carrera: 'Civil', asistencias: 333, ausencias: 98, porcentajeAsistencias: '77%', porcentajeAusencias: '23%' },
-        { carrera: 'Eléctrica', asistencias: 148, ausencias: 48, porcentajeAsistencias: '66%', porcentajeAusencias: '34%' },
-        { carrera: 'Industrial', asistencias: 337, ausencias: 124, porcentajeAsistencias: '73%', porcentajeAusencias: '27%' },
-        { carrera: 'Mecánica', asistencias: 125, ausencias: 58, porcentajeAsistencias: '68%', porcentajeAusencias: '32%' }
+        { carrera: 'Agrícola', asistencias: 23, ausencias: 9, porcentajeAsistencias: '72%', porcentajeAusencias: '28%' },
+        { carrera: 'Química', asistencias: 29, ausencias: 10, porcentajeAsistencias: '74%', porcentajeAusencias: '26%' },
+        { carrera: 'Computación', asistencias: 48, ausencias: 17, porcentajeAsistencias: '74%', porcentajeAusencias: '26%' },
+        { carrera: 'Sistema', asistencias: 47, ausencias: 22, porcentajeAsistencias: '68%', porcentajeAusencias: '32%' },
+        { carrera: 'Electrónica', asistencias: 25, ausencias: 10, porcentajeAsistencias: '71%', porcentajeAusencias: '29%' },
+        { carrera: 'Telecom', asistencias: 12, ausencias: 5, porcentajeAsistencias: '71%', porcentajeAusencias: '29%' },
+        { carrera: 'Arquitectura', asistencias: 82, ausencias: 39, porcentajeAsistencias: '68%', porcentajeAusencias: '32%' },
+        { carrera: 'Civil', asistencias: 67, ausencias: 20, porcentajeAsistencias: '77%', porcentajeAusencias: '23%' },
+        { carrera: 'Eléctrica', asistencias: 30, ausencias: 10, porcentajeAsistencias: '75%', porcentajeAusencias: '25%' },
+        { carrera: 'Industrial', asistencias: 67, ausencias: 25, porcentajeAsistencias: '73%', porcentajeAusencias: '27%' },
+        { carrera: 'Mecánica', asistencias: 25, ausencias: 12, porcentajeAsistencias: '68%', porcentajeAusencias: '32%' }
     ];
 
     const barData = {
@@ -101,6 +101,11 @@ const PaginaPrincipal = () => {
             }
         ]
     };
+
+    const pieData = [
+        { id: 'Asistencias', label: 'Asistencias', value: data.reduce((acc, row) => acc + row.asistencias, 0) },
+        { id: 'Ausencias', label: 'Ausencias', value: data.reduce((acc, row) => acc + row.ausencias, 0) }
+    ];
 
     return (
         <div className='principal-container'>
@@ -198,6 +203,17 @@ const PaginaPrincipal = () => {
                                     width={500}
                                     height={400}
                                 />
+                                <PieChart
+                                        series={[
+                                            {
+                                                innerRadius: 0,
+                                                outerRadius: 80,
+                                                data: pieData
+                                            }
+                                        ]}
+                                        width={500}
+                                        height={300}
+                                    />
                             </Grid>
                         </Grid>
                     </div>
